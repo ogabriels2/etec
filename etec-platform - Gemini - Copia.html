@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ETEC Study — Seu Guia Estratégico</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=DM+Serif+Display:ital@0;1&display=swap');
+
+  :root {
+    /* Tema Claro, Amigável e Moderno */
+    --bg: #f4f7fb;
+    --bg2: #ffffff;
+    --bg3: #f8fafc;
+    --bg4: #e8eef7;
+    --border: #e2e8f0;
+    --border2: #cbd5e1;
+    --text: #1e293b;
+    --text2: #475569;
+    --text3: #64748b;
+    
+    /* Cores de Destaque */
+    --accent: #6366f1; /* Indigo amigável */
+    --accent2: #4f46e5;
+    --accent-bg: #e0e7ff;
+    --accent-border: #c7d2fe;
+    
+    --green: #10b981;
+    --green-bg: #d1fae5;
+    --yellow: #f59e0b;
+    --yellow-bg: #fef3c7;
+    --red: #ef4444;
+    --red-bg: #fee2e2;
+    --orange: #f97316;
+    --orange-bg: #ffedd5;
+    
+    /* UI Geral */
+    --radius: 20px;
+    --radius-sm: 12px;
+    --shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    --shadow-hover: 0 15px 35px rgba(15, 23, 42, 0.08);
+    --sidebar-w: 260px;
+    --font: 'Nunito', sans-serif;
+    --font-serif: 'DM Serif Display', serif;
+    --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 15px; scroll-behavior: smooth; }
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* LAYOUT */
+  #app { display: flex; min-height: 100vh; }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: var(--sidebar-w);
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(10px);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0;
+    height: 100vh;
+    z-index: 100;
+    transition: transform var(--transition);
+    overflow-y: auto;
+    box-shadow: var(--shadow);
+  }
+  .sidebar-logo {
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo-mark {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    color: var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-sub {
+    font-size: 11px;
+    color: var(--text3);
+    margin-top: 4px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 800;
+  }
+  .sidebar-nav { padding: 16px 12px; flex: 1; }
+  .nav-section-title {
+    font-size: 11px;
+    color: var(--text3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 800;
+    padding: 16px 12px 8px;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 4px;
+    cursor: pointer;
+    color: var(--text2);
+    font-size: 15px;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition);
+    user-select: none;
+    border-left: 3px solid transparent;
+  }
+  .nav-item:hover { color: var(--accent); background: var(--bg3); }
+  .nav-item.active {
+    color: var(--accent2);
+    background: var(--accent-bg);
+    border-left-color: var(--accent);
+  }
+  .nav-icon { font-size: 18px; width: 22px; text-align: center; flex-shrink: 0; }
+  .nav-badge {
+    margin-left: auto;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .sidebar-footer {
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text3);
+    line-height: 1.6;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  /* MAIN */
+  #main {
+    margin-left: var(--sidebar-w);
+    flex: 1;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* TOPBAR */
+  #topbar {
+    background: rgba(255,255,255,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+  .topbar-left { display: flex; align-items: center; gap: 16px; }
+  .page-title { font-size: 20px; font-weight: 800; color: var(--text); }
+  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 18px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    border: none;
+    transition: all var(--transition);
+  }
+  .btn-ghost { background: var(--bg2); color: var(--text2); border: 1px solid var(--border2); }
+  .btn-ghost:hover { background: var(--bg3); color: var(--text); border-color: var(--text3); box-shadow: var(--shadow); }
+  .btn-primary { background: var(--accent); color: #fff; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3); }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4); }
+  .hamburger { display: none; background: transparent; border: none; color: var(--text2); cursor: pointer; padding: 4px; font-size: 24px; }
+
+  /* CONTENT */
+  #content { padding: 32px; flex: 1; max-width: 1200px; margin: 0 auto; width: 100%; }
+  .view { display: none; animation: fadeIn 0.3s ease; }
+  .view.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* DASHBOARD */
+  .welcome-banner {
+    background: linear-gradient(135deg, var(--accent) 0%, #818cf8 100%);
+    border-radius: var(--radius);
+    padding: 32px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    box-shadow: var(--shadow);
+  }
+  .welcome-banner::before {
+    content: '🚀';
+    position: absolute;
+    top: -20px; right: 20px;
+    font-size: 140px;
+    opacity: 0.15;
+    transform: rotate(15deg);
+  }
+  .welcome-title { font-family: var(--font-serif); font-size: 34px; margin-bottom: 8px; position: relative; }
+  .welcome-sub { font-size: 16px; opacity: 0.95; line-height: 1.6; position: relative; font-weight: 600; }
+  
+  /* QUICK ACTIONS (NOVO E CONECTADO) */
+  .quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+  .quick-action {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font);
+    transition: all var(--transition);
+    box-shadow: var(--shadow);
+  }
+  .quick-action:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent-border);
+    box-shadow: var(--shadow-hover);
+  }
+  .quick-action-icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+  .quick-action-text strong { display: block; font-size: 15px; color: var(--text); margin-bottom: 2px; font-weight: 800; }
+  .quick-action-text small { display: block; font-size: 13px; color: var(--text3); font-weight: 600; }
+
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 32px; }
+  .stat-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    transition: transform var(--transition);
+  }
+  .stat-card:hover { transform: translateY(-3px); }
+  .stat-label { font-size: 12px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800; margin-bottom: 12px; }
+  .stat-value { font-size: 38px; font-weight: 800; color: var(--text); letter-spacing: -1px; line-height: 1; }
+  .stat-unit { font-size: 14px; color: var(--text2); margin-top: 6px; font-weight: 600; }
+  .stat-bar { height: 6px; background: var(--bg4); border-radius: 4px; margin-top: 16px; overflow: hidden; }
+  .stat-bar-fill { height: 100%; border-radius: 4px; transition: width 0.8s ease; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 32px; }
+  .card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); }
+  .card-title { font-size: 18px; font-weight: 800; color: var(--text); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  
+  /* TODAY's plan */
+  .today-item {
+    display: flex; align-items: flex-start; gap: 16px; padding: 16px;
+    border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 12px;
+    transition: all var(--transition); background: var(--bg2);
+  }
+  .today-item:hover { border-color: var(--border2); transform: translateX(4px); }
+  .today-item.completed { background: var(--green-bg); border-color: var(--green); opacity: 0.85; }
+  .today-check {
+    width: 26px; height: 26px; border: 2px solid var(--border2); border-radius: 8px;
+    cursor: pointer; flex-shrink: 0; margin-top: 2px;
+    display: flex; align-items: center; justify-content: center;
+    transition: all var(--transition); font-size: 14px; font-weight: bold; background: var(--bg2);
+  }
+  .today-check.done { background: var(--green); border-color: var(--green); color: #fff; }
+  .today-info { flex: 1; }
+  .today-subject { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .today-topic { font-size: 16px; color: var(--text); font-weight: 700; }
+  .today-tip { font-size: 13px; color: var(--text3); margin-top: 6px; font-weight: 600; display:flex; gap:6px; }
+  
+  /* PROGRESS RINGS */
+  .progress-subjects { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; }
+  .subject-progress {
+    background: var(--bg3); border-radius: var(--radius-sm); padding: 16px;
+    text-align: center; cursor: pointer; transition: all var(--transition); border: 1px solid transparent;
+  }
+  .subject-progress:hover { border-color: var(--accent-border); background: var(--bg2); transform: translateY(-3px); box-shadow: var(--shadow); }
+  .subject-progress .ring { margin: 0 auto 12px; display: block; }
+  .subject-name { font-size: 14px; font-weight: 800; color: var(--text2); }
+  .subject-pct { font-size: 20px; font-weight: 800; color: var(--text); }
+
+  /* SCHEDULE VIEW */
+  .phase-header {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px 24px; margin-bottom: 16px; display: flex; align-items: center; gap: 16px;
+    cursor: pointer; transition: all var(--transition); box-shadow: var(--shadow);
+  }
+  .phase-header:hover { border-color: var(--accent-border); }
+  .phase-num { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; flex-shrink: 0; }
+  .phase-info { flex: 1; }
+  .phase-name { font-size: 18px; font-weight: 800; color: var(--text); }
+  .phase-desc { font-size: 14px; color: var(--text3); margin-top: 4px; font-weight: 600; }
+  .phase-weeks { font-size: 12px; font-weight: 800; color: var(--text2); background: var(--bg3); padding: 6px 12px; border-radius: 20px; }
+  .phase-chevron { color: var(--text3); transition: transform var(--transition); font-size: 20px; font-weight: bold; }
+  .phase-header.open .phase-chevron { transform: rotate(90deg); }
+  .weeks-container { display: none; padding: 0 0 20px 16px; border-left: 2px solid var(--border); margin-left: 24px; margin-bottom: 24px; }
+  .weeks-container.open { display: block; }
+  .week-header {
+    display: flex; align-items: center; justify-content: space-between; padding: 16px;
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    margin-bottom: 12px; margin-top: 12px; cursor: pointer; transition: all var(--transition);
+  }
+  .week-header:hover { border-color: var(--border2); background: var(--bg3); }
+  .week-title { font-size: 16px; font-weight: 800; color: var(--text); }
+  .week-subtitle { font-size: 14px; color: var(--text3); font-weight: 600; margin-top: 4px; }
+  .week-chevron { color: var(--text3); font-size: 16px; font-weight: bold; transition: transform var(--transition); }
+  .week-header.open .week-chevron { transform: rotate(90deg); }
+  .days-table { display: none; margin-bottom: 16px; padding-left: 16px; }
+  .days-table.open { display: block; }
+  .day-row {
+    display: grid; grid-template-columns: 70px 1fr 100px 40px; gap: 16px; align-items: center;
+    padding: 16px; background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm);
+    margin-bottom: 8px; transition: all var(--transition);
+  }
+  .day-row:hover { border-color: var(--border2); transform: translateX(4px); }
+  .day-row-day { font-size: 14px; font-weight: 800; color: var(--text3); }
+  .day-row-subj { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
+  .day-row-topic { font-size: 16px; color: var(--text); font-weight: 700; }
+  .day-row-tip { font-size: 13px; color: var(--text3); margin-top: 6px; font-weight: 600; }
+  .day-row-diff { font-size: 12px; font-weight: 800; text-align: center; }
+  .day-row-check {
+    width: 26px; height: 26px; border: 2px solid var(--border2); border-radius: 8px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold;
+    transition: all var(--transition); background: var(--bg); justify-self: center;
+  }
+  .day-row-check.done { background: var(--green); border-color: var(--green); color: #fff; }
+
+  /* MAPA DE CONTEÚDOS */
+  .map-tabs {
+    display: flex; gap: 8px; padding: 8px; background: var(--bg2); border-radius: var(--radius);
+    margin-bottom: 24px; flex-wrap: wrap; border: 1px solid var(--border); box-shadow: var(--shadow);
+  }
+  .map-tab {
+    padding: 10px 20px; border-radius: var(--radius-sm); cursor: pointer; font-size: 15px; font-weight: 800;
+    color: var(--text2); transition: all var(--transition); border: none; background: transparent; font-family: var(--font);
+  }
+  .map-tab:hover { color: var(--accent); background: var(--bg3); }
+  .map-tab.active { background: var(--accent-bg); color: var(--accent2); }
+  .map-content { display: none; }
+  .map-content.active { display: block; }
+  .topic-row {
+    display: flex; align-items: center; gap: 16px; padding: 16px; background: var(--bg2);
+    border-radius: var(--radius-sm); margin-bottom: 8px; border: 1px solid var(--border); transition: all var(--transition);
+  }
+  .topic-row:hover { border-color: var(--accent-border); box-shadow: var(--shadow); transform: translateX(2px); }
+  .topic-priority { font-size: 11px; font-weight: 800; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; width: 95px; text-align: center; flex-shrink: 0; }
+  .topic-name { flex: 1; font-size: 16px; font-weight: 700; color: var(--text); }
+  .topic-diff { font-size: 13px; font-weight: 800; color: var(--text3); width: 100px; text-align: right; flex-shrink: 0; }
+  .topic-status {
+    width: 36px; height: 36px; border: 2px solid var(--border2); border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: bold;
+    flex-shrink: 0; transition: all var(--transition); background: var(--bg);
+  }
+  .topic-status.green { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+  .topic-status.yellow { background: var(--yellow-bg); border-color: var(--yellow); color: var(--yellow); }
+  .topic-status.red { background: var(--red-bg); border-color: var(--red); color: var(--red); }
+  .priority-max { background: var(--accent-bg); color: var(--accent2); }
+  .priority-high { background: var(--green-bg); color: var(--green); }
+  .priority-med { background: var(--yellow-bg); color: var(--yellow); }
+  .priority-low { background: var(--bg4); color: var(--text3); }
+
+  /* SIMULADOS */
+  .sim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+  .sim-card {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 24px; cursor: pointer; box-shadow: var(--shadow); transition: all var(--transition);
+    display: flex; flex-direction: column;
+  }
+  .sim-card:hover { border-color: var(--accent-border); transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+  .sim-card-num { font-family: var(--font-serif); font-size: 42px; color: var(--text); line-height: 1; margin-bottom: 8px; }
+  .sim-card-week { font-size: 13px; font-weight: 800; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; }
+  .sim-card-score { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+  .sim-card-bar { height: 6px; background: var(--bg4); border-radius: 4px; margin-top: 12px; overflow: hidden; }
+  .sim-card-bar-fill { height: 100%; border-radius: 4px; }
+  .sim-card-status { font-size: 13px; padding: 4px 12px; border-radius: 20px; font-weight: 800; display: inline-block; margin-top: 12px; align-self: flex-start; }
+  .sim-card-status.pending { background: var(--bg3); color: var(--text2); border: 1px dashed var(--border2); }
+  .sim-card-status.done { background: var(--green-bg); color: var(--green); }
+
+  /* ERROS */
+  .error-add-form { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 32px; box-shadow: var(--shadow); }
+  .error-form-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .input-label { font-size: 13px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 800; margin-bottom: 8px; }
+  .score-input, .error-select, .error-textarea {
+    width: 100%; background: var(--bg); border: 1px solid var(--border2); border-radius: var(--radius-sm);
+    padding: 14px; color: var(--text); font-family: var(--font); font-size: 15px; font-weight: 600;
+    outline: none; transition: all var(--transition);
+  }
+  .score-input:focus, .error-select:focus, .error-textarea:focus { border-color: var(--accent); background: var(--bg2); box-shadow: 0 0 0 4px var(--accent-bg); }
+  .error-textarea { resize: vertical; min-height: 90px; margin-bottom: 16px; }
+  .error-item {
+    background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 20px; margin-bottom: 12px; display: flex; gap: 16px; align-items: flex-start;
+    box-shadow: var(--shadow); transition: all var(--transition);
+  }
+  .error-item:hover { border-color: var(--border2); transform: translateX(4px); }
+  .error-badge { font-size: 11px; font-weight: 800; padding: 6px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; margin-top: 2px; }
+  .error-content { flex: 1; }
+  .error-topic { font-size: 17px; color: var(--text); font-weight: 800; margin-bottom: 6px; }
+  .error-reason { font-size: 15px; color: var(--text2); line-height: 1.6; font-weight: 600; }
+  .error-date { font-size: 12px; color: var(--text3); margin-top: 8px; font-weight: 700; }
+  .error-del { background: transparent; border: none; color: var(--text3); cursor: pointer; font-size: 20px; padding: 4px; transition: color var(--transition); }
+  .error-del:hover { color: var(--red); }
+
+  /* TIMER */
+  .timer-container { background: var(--bg2); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow); border: 1px solid var(--border); max-width: 500px; margin: 0 auto; text-align: center; }
+  .timer-display { font-family: var(--font-serif); font-size: 100px; color: var(--text); line-height: 1; margin: 32px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.05); }
+  .timer-mode-tabs { display: flex; gap: 8px; margin-bottom: 24px; justify-content: center; flex-wrap: wrap; }
+  .timer-mode { padding: 10px 18px; border-radius: 20px; font-size: 14px; font-weight: 800; cursor: pointer; border: 1px solid var(--border2); background: var(--bg); color: var(--text2); font-family: var(--font); transition: all var(--transition); }
+  .timer-mode.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  /* MODAL */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 200; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+  .modal-overlay.open { display: flex; }
+  .modal { background: var(--bg2); border-radius: var(--radius); padding: 32px; max-width: 500px; width: 100%; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-hover); position: relative; }
+  .modal-title { font-family: var(--font-serif); font-size: 28px; margin-bottom: 8px; color: var(--text); }
+  .modal-sub { font-size: 15px; color: var(--text2); margin-bottom: 24px; line-height: 1.5; font-weight: 600;}
+  .modal-close { position: absolute; top: 20px; right: 20px; background: var(--bg3); border: none; color: var(--text2); width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all var(--transition); }
+  .modal-close:hover { background: var(--bg4); color: var(--text); }
+
+  /* RECURSOS & ESTRATEGIA */
+  .resource-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .resource-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: all var(--transition); cursor: pointer; text-decoration: none; display: block; box-shadow: var(--shadow); }
+  .resource-card:hover { border-color: var(--accent-border); transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+  .resource-icon { font-size: 32px; margin-bottom: 16px; }
+  .resource-name { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+  .resource-desc { font-size: 14px; color: var(--text2); line-height: 1.6; font-weight: 600; }
+  .resource-tag { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; margin-top: 16px; display: inline-block; }
+  
+  .section-title { font-size: 30px; font-weight: 800; color: var(--text); margin-bottom: 8px; font-family: var(--font-serif); }
+  .section-sub { font-size: 16px; color: var(--text2); margin-bottom: 32px; font-weight: 600; }
+
+  /* NOTIFICAÇÕES TOAST */
+  .notif {
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--text); color: var(--bg2);
+    border-radius: var(--radius-sm); padding: 16px 24px;
+    font-size: 15px; font-weight: 700; z-index: 999;
+    transform: translateY(100px); opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: var(--shadow-hover); display: flex; align-items: center; gap: 16px;
+  }
+  .notif.show { transform: translateY(0); opacity: 1; }
+  .toast-btn { background: var(--accent); color: white; border: none; padding: 8px 14px; border-radius: 8px; font-weight: 800; cursor: pointer; font-size: 14px; transition: 0.2s; }
+  .toast-btn:hover { background: var(--accent2); }
+
+  /* OVERLAY E RESPONSIVO */
+  #sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); z-index: 99; backdrop-filter: blur(2px); }
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+  @media (max-width: 768px) {
+    :root { --sidebar-w: 280px; }
+    #sidebar { transform: translateX(-100%); }
+    #sidebar.open { transform: translateX(0); }
+    #sidebar-overlay { display: block; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
+    #sidebar-overlay.open { opacity: 1; pointer-events: auto; }
+    #main { margin-left: 0; }
+    .hamburger { display: block; }
+    .grid-2, .quick-actions { grid-template-columns: 1fr; }
+    #content { padding: 20px; }
+    #topbar { padding: 0 20px; height: 60px; }
+    .day-row { grid-template-columns: 60px 1fr 40px; }
+    .day-row-diff { display: none; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .score-inputs, .error-form-grid { grid-template-columns: 1fr; }
+    .timer-display { font-size: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <aside id="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">📚 ETEC Study</div>
+      <div class="logo-sub">Seu Guia Estratégico</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Principal</div>
+      <div class="nav-item active" onclick="navigate('dashboard')"><span class="nav-icon">🏠</span> Painel Inicial</div>
+      <div class="nav-item" onclick="navigate('schedule')"><span class="nav-icon">📅</span> Cronograma</div>
+      <div class="nav-item" onclick="navigate('map')"><span class="nav-icon">🗺️</span> Mapa de Matérias</div>
+      
+      <div class="nav-section-title">Ferramentas</div>
+      <div class="nav-item" onclick="navigate('simulados')"><span class="nav-icon">🎯</span> Simulados <span class="nav-badge" id="badge-simulados">19</span></div>
+      <div class="nav-item" onclick="navigate('erros')"><span class="nav-icon">📓</span> Caderno de Erros <span class="nav-badge" id="badge-erros">0</span></div>
+      <div class="nav-item" onclick="navigate('timer')"><span class="nav-icon">⏱️</span> Foco & Timer</div>
+      <div class="nav-item" onclick="navigate('formulas')"><span class="nav-icon">📐</span> Fórmulas Rápidas</div>
+      
+      <div class="nav-section-title">Extra</div>
+      <div class="nav-item" onclick="navigate('recursos')"><span class="nav-icon">🎁</span> Links Gratuitos</div>
+      <div class="nav-item" onclick="navigate('estrategia')"><span class="nav-icon">🧠</span> Estratégia de Prova</div>
+    </nav>
+    <div class="sidebar-footer">
+      Feito para você passar! 🚀<br>Análise das provas 2019–2026
+    </div>
+  </aside>
+  <div id="sidebar-overlay" onclick="closeSidebar()"></div>
+
+  <div id="main">
+    <header id="topbar">
+      <div class="topbar-left">
+        <button class="hamburger" onclick="toggleSidebar()">☰</button>
+        <span class="page-title" id="page-title">Dashboard</span>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-ghost" onclick="navigate('simulados')">🎯 Lançar Nota</button>
+      </div>
+    </header>
+
+    <main id="content">
+
+      <div id="view-dashboard" class="view active">
+        <div class="welcome-banner">
+          <div class="welcome-title">Olá, <span id="student-name-display">estudante</span>! 👋</div>
+          <div class="welcome-sub">Você está na <strong>Semana <span id="current-week-display">1</span></strong>. Hoje é <span id="today-date-display"></span>. Pronto para arrasar?</div>
+        </div>
+
+        <div class="quick-actions">
+          <button class="quick-action" onclick="navigate('schedule')">
+            <div class="quick-action-icon">📅</div>
+            <div class="quick-action-text"><strong>Cronograma</strong><small>O que estudar hoje?</small></div>
+          </button>
+          <button class="quick-action" onclick="navigate('timer')">
+            <div class="quick-action-icon">⏱️</div>
+            <div class="quick-action-text"><strong>Modo Foco</strong><small>Estudar sem distrações</small></div>
+          </button>
+          <button class="quick-action" onclick="navigate('erros')">
+            <div class="quick-action-icon">📓</div>
+            <div class="quick-action-text"><strong>Caderno de Erros</strong><small>Transforme erro em acerto</small></div>
+          </button>
+          <button class="quick-action" onclick="navigate('map')">
+            <div class="quick-action-icon">🗺️</div>
+            <div class="quick-action-text"><strong>Meu Domínio</strong><small>Onde preciso melhorar?</small></div>
+          </button>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Dias Concluídos</div>
+            <div class="stat-value" id="stat-days">0</div>
+            <div class="stat-unit">de 174 dias no guia</div>
+            <div class="stat-bar"><div class="stat-bar-fill" id="bar-days" style="background:var(--accent);width:0%"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Simulados Feitos</div>
+            <div class="stat-value" id="stat-sims">0</div>
+            <div class="stat-unit">de 19 sugeridos</div>
+            <div class="stat-bar"><div class="stat-bar-fill" id="bar-sims" style="background:var(--green);width:0%"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Última Nota</div>
+            <div class="stat-value" id="stat-score">–</div>
+            <div class="stat-unit" id="stat-score-sub">Nenhum simulado feito</div>
+            <div class="stat-bar"><div class="stat-bar-fill" id="bar-score" style="background:var(--yellow);width:0%"></div></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Caderno de Erros</div>
+            <div class="stat-value" id="stat-errors">0</div>
+            <div class="stat-unit">Anotações registradas</div>
+            <div class="stat-bar"><div class="stat-bar-fill" id="bar-errors" style="background:var(--orange);width:0%"></div></div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">📌 Missões de Hoje — Sem. <span id="today-week-num">1</span></div>
+            <div id="today-items"></div>
+          </div>
+          <div class="card">
+            <div class="card-title">📈 Seu Domínio por Matéria</div>
+            <div class="progress-subjects" id="progress-subjects"></div>
+            <div style="text-align:center; margin-top:20px;">
+              <button class="btn btn-ghost" onclick="navigate('map')">Atualizar Níveis 🗺️</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-schedule" class="view">
+        <div class="section-title">Seu Cronograma 📅</div>
+        <div class="section-sub">O caminho passo a passo. Marque os dias conforme for estudando.</div>
+        <div id="schedule-phases"></div>
+      </div>
+
+      <div id="view-map" class="view">
+        <div class="section-title">Mapa de Matérias 🗺️</div>
+        <div class="section-sub">Avalie como você está em cada assunto clicando nos ícones. Seja sincero!</div>
+        <div style="display:flex;align-items:center;gap:20px;margin-bottom:24px;flex-wrap:wrap; background:var(--bg2); padding:16px 24px; border-radius:var(--radius); border:1px solid var(--border)">
+          <div style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--text2)">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--green-bg);border:2px solid var(--green); display:flex; align-items:center; justify-content:center; color:var(--green);">✓</div> Domino Bem
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--text2)">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--yellow-bg);border:2px solid var(--yellow); display:flex; align-items:center; justify-content:center; color:var(--yellow);">!</div> Preciso Revisar
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--text2)">
+            <div style="width:24px;height:24px;border-radius:50%;background:var(--red-bg);border:2px solid var(--red); display:flex; align-items:center; justify-content:center; color:var(--red);">✕</div> Ponto Fraco
+          </div>
+        </div>
+        <div class="map-tabs" id="map-tabs"></div>
+        <div id="map-contents"></div>
+      </div>
+
+      <div id="view-simulados" class="view">
+        <div class="section-title">Seus Simulados 🎯</div>
+        <div class="section-sub">Acompanhe sua evolução. O treino duro traz a prova fácil.</div>
+        <div style="margin-bottom:32px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:28px; box-shadow:var(--shadow)">
+          <div class="card-title" style="margin-bottom:16px">📈 Gráfico de Evolução</div>
+          <canvas id="progress-chart" height="120" style="width:100%;max-width:100%"></canvas>
+        </div>
+        <div class="sim-grid" id="sim-grid"></div>
+      </div>
+
+      <div id="view-erros" class="view">
+        <div class="section-title">Caderno de Erros 📓</div>
+        <div class="section-sub">O lugar mais importante. Errou? Anota o motivo aqui para nunca mais esquecer!</div>
+        <div class="error-add-form">
+          <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:20px">➕ Novo Registro</div>
+          <div class="error-form-grid">
+            <div>
+              <div class="input-label">Matéria</div>
+              <select class="error-select" id="err-subject">
+                <option value="">Escolha...</option>
+                <option>Português</option><option>Matemática</option><option>Biologia</option>
+                <option>Química</option><option>Física</option><option>História</option><option>Geografia</option>
+              </select>
+            </div>
+            <div>
+              <div class="input-label">Tópico (Assunto)</div>
+              <input class="score-input" id="err-topic" placeholder="Ex: Regra de três" type="text">
+            </div>
+            <div>
+              <div class="input-label">Por que errou?</div>
+              <select class="error-select" id="err-type">
+                <option value="">Escolha...</option>
+                <option>Não sabia a matéria</option>
+                <option>Interpretei a pergunta mal</option>
+                <option>Erro bobo / Falta de atenção</option>
+                <option>Errei no cálculo</option>
+                <option>Branco / Esqueci a fórmula</option>
+              </select>
+            </div>
+          </div>
+          <div class="input-label" style="margin-bottom:8px">Anotação (A resposta certa e a dica para você mesmo)</div>
+          <textarea class="error-textarea" id="err-desc" placeholder="Ex: Eu esqueci que primeiro multiplica e depois soma..."></textarea>
+          <button class="btn btn-primary" onclick="addError()" style="font-size:15px; padding:12px 24px">Salvar no Caderno 📓</button>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+          <div id="err-count" style="font-size:16px; font-weight:800; color:var(--text2)">0 erros registrados</div>
+          <select class="error-select" style="width:auto; padding:10px 16px; font-size:15px" id="err-filter" onchange="renderErrors()">
+            <option value="">Ver todas as matérias</option>
+            <option>Português</option><option>Matemática</option><option>Biologia</option>
+            <option>Química</option><option>Física</option><option>História</option><option>Geografia</option>
+          </select>
+        </div>
+        <div id="errors-list"></div>
+      </div>
+
+      <div id="view-timer" class="view">
+        <div class="section-title">Modo Foco ⏱️</div>
+        <div class="section-sub">Dê play, esqueça o celular e concentre-se na missão.</div>
+        <div class="timer-container">
+          <div class="timer-mode-tabs">
+            <button class="timer-mode active" onclick="setTimerMode('pomodoro',this)">🍅 Pomodoro 25min</button>
+            <button class="timer-mode" onclick="setTimerMode('50',this)">📚 Bloco 50min</button>
+            <button class="timer-mode" onclick="setTimerMode('prova',this)">🎯 Simular 4h</button>
+            <button class="timer-mode" onclick="setTimerMode('livre',this)">♾️ Livre</button>
+          </div>
+          <select class="error-select" id="timer-subject" style="margin-bottom: 24px; text-align:center;">
+            <option value="">O que você vai estudar agora?</option>
+            <option>Português</option><option>Matemática</option><option>Biologia</option>
+            <option>Química</option><option>Física</option><option>História</option><option>Geografia</option>
+            <option>Revisão Geral / Simulado</option>
+          </select>
+          <div class="timer-display" id="timer-display">25:00</div>
+          <div style="display:flex; gap:16px; justify-content:center; margin-bottom: 32px;">
+            <button class="btn btn-primary" style="font-size:18px; padding:12px 32px" onclick="timerAction('start')" id="btn-start">▶️ Iniciar</button>
+            <button class="btn btn-primary" style="font-size:18px; padding:12px 32px; display:none; background:var(--orange)" onclick="timerAction('pause')" id="btn-pause">⏸️ Pausar/Salvar</button>
+            <button class="btn btn-ghost" onclick="timerAction('reset')">🔄 Reiniciar</button>
+          </div>
+          <div style="background:var(--bg3); border-radius:var(--radius-sm); padding:16px; font-weight:700; color:var(--text2); border: 1px solid var(--border)">
+            Hoje: <strong id="sessions-today" style="color:var(--accent)">0</strong> sessões &nbsp; | &nbsp; Tempo total: <strong id="total-time" style="color:var(--accent)">0min</strong>
+          </div>
+          <div style="margin-top:24px; text-align:left;">
+            <div style="font-size:13px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;font-weight:800;margin-bottom:12px">Histórico de hoje</div>
+            <div id="timer-history"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="view-formulas" class="view">
+        <div class="section-title">Fórmulas Salva-Vidas 📐</div>
+        <div class="section-sub">Aquele resumo rápido essencial para as matérias de exatas e datas.</div>
+        <div class="map-tabs" id="formula-tabs" style="margin-bottom:24px"></div>
+        <div id="formula-contents"></div>
+      </div>
+
+      <div id="view-recursos" class="view">
+        <div class="section-title">Links e Recursos Gratuitos 🎁</div>
+        <div class="section-sub">Os melhores canais e ferramentas gratuitas da internet selecionadas para você.</div>
+        <div class="resource-grid" id="resources-grid"></div>
+      </div>
+
+      <div id="view-estrategia" class="view">
+        <div class="section-title">Estratégia de Prova 🧠</div>
+        <div class="section-sub">Dicas de ouro para não perder pontos de bobeira no dia do Vestibulinho.</div>
+        <div id="strategy-content"></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div class="modal-overlay" id="sim-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSimModal()">✕</button>
+    <div class="modal-title" id="modal-sim-title">Simulado 1</div>
+    <div class="modal-sub" id="modal-sim-sub">Semanas 1–8 · Prova Completa</div>
+    
+    <div style="background:var(--bg3); padding:20px; border-radius:var(--radius-sm); margin-bottom:24px; border:1px solid var(--border)">
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+        <div><div class="input-label">Português (15q)</div><input class="score-input" type="number" id="inp-port" min="0" max="15" placeholder="Acertos"></div>
+        <div><div class="input-label">Matemática (12q)</div><input class="score-input" type="number" id="inp-mat" min="0" max="12" placeholder="Acertos"></div>
+        <div><div class="input-label">Ciências (15q)</div><input class="score-input" type="number" id="inp-cien" min="0" max="15" placeholder="Acertos"></div>
+        <div><div class="input-label">Humanas (8q)</div><input class="score-input" type="number" id="inp-hum" min="0" max="8" placeholder="Acertos"></div>
+      </div>
+    </div>
+    
+    <div style="font-size:24px; font-weight:800; text-align:center; margin-bottom:24px" id="modal-total-preview">Total: – / 50</div>
+    
+    <div style="margin-bottom:24px">
+      <div class="input-label">Como foi? (Observações)</div>
+      <textarea class="error-textarea" id="inp-obs" placeholder="Ex: Fui mal em matemática, preciso focar em geometria..." style="min-height:80px; margin-bottom:0"></textarea>
+    </div>
+    
+    <button class="btn btn-primary" onclick="saveSimulado()" style="width:100%; padding:16px; font-size:16px">Salvar Resultado 🎯</button>
+  </div>
+</div>
+
+<div class="notif" id="notif"></div>
+
+<script>
+// ========== DATA INTEGRAL MANTIDA ==========
+const SCHEDULE = [
+  {phase:1,name:"O Alicerce",desc:"Base sólida antes de avançar",weeks:"1–8",color:"#6366f1",weeks_data:[
+    {num:1,title:"Interpretação de Texto e Operações Básicas",sub:"Português + Matemática + História + Geografia",days:[
+      {mat:"Português",topic:"Interpretação de Texto I",diff:"Média",tip:"Leia a pergunta ANTES do texto para saber o que procurar."},
+      {mat:"Matemática",topic:"Operações com Números Naturais",diff:"Fácil",tip:"Sempre releia o enunciado após calcular."},
+      {mat:"Português",topic:"Tipos e Gêneros Textuais",diff:"Média",tip:"Monte um quadro comparativo dos gêneros."},
+      {mat:"Matemática",topic:"Números Inteiros e Racionais",diff:"Fácil-Média",tip:"Cuidado com parênteses em expressões."},
+      {mat:"História",topic:"Brasil Pré-Colonial e Povos Indígenas",diff:"Fácil",tip:"Monte uma linha do tempo visual."},
+      {mat:"Geografia",topic:"A Terra e seus Movimentos",diff:"Fácil",tip:"Desenhe o esquema de rotação/translação."}
+    ]},
+    {num:2,title:"Frações, Gramática Básica e Brasil Colônia",sub:"Matemática + Português + História + Revisão",days:[
+      {mat:"Matemática",topic:"Frações I",diff:"Fácil-Média",tip:"Use desenhos de pizza para visualizar frações."},
+      {mat:"Português",topic:"Classes de Palavras I: Substantivo, Adjetivo",diff:"Média",tip:"Nunca classifique palavra isolada."},
+      {mat:"Matemática",topic:"Frações II: Operações",diff:"Média",tip:"Nunca some numeradores sem igualar denominadores."},
+      {mat:"Português",topic:"Classes de Palavras II: Pronome e Numeral",diff:"Média",tip:"Pronomes relativos são cobrados em interpretação."},
+      {mat:"História",topic:"Brasil Colônia I: Chegada Europeia",diff:"Fácil-Média",tip:"Associe: pau-brasil → cana-de-açúcar → ouro."},
+      {mat:"Revisão",topic:"Revisão Semanas 1–2 + Simulado Parcial",diff:"—",tip:"Anote CADA erro no caderno de erros."}
+    ]},
+    {num:3,title:"Porcentagem, Concordância e Escravidão",sub:"Matemática + Português + História + Geografia",days:[
+      {mat:"Matemática",topic:"Porcentagem I",diff:"Média",tip:"Porcentagem CAI EM TODA prova ETEC. Domine primeiro."},
+      {mat:"Português",topic:"Concordância Verbal I",diff:"Média",tip:"Encontre o sujeito antes de verificar a concordância."},
+      {mat:"Matemática",topic:"Porcentagem II: Aumento e Desconto",diff:"Média",tip:"Aumento+desconto de 20% NÃO volta ao mesmo valor!"},
+      {mat:"Português",topic:"Concordância Nominal",diff:"Média",tip:"Identifique a quem o adjetivo se refere."},
+      {mat:"História",topic:"Brasil Colônia II: Escravidão Africana",diff:"Média",tip:"Quilombo dos Palmares e Zumbi são muito cobrados."},
+      {mat:"Geografia",topic:"Cartografia: Mapas, Escala e Coordenadas",diff:"Fácil-Média",tip:"1:100.000 = 1cm no mapa = 1km real."}
+    ]},
+    {num:4,title:"Regra de Três, Pontuação e Independência",sub:"Matemática + Português + História + Simulado",days:[
+      {mat:"Matemática",topic:"Razão e Proporção",diff:"Fácil-Média",tip:"Produto dos extremos = produto dos meios."},
+      {mat:"Português",topic:"Pontuação I: Vírgula",diff:"Média-Alta",tip:"Vírgula muda o sentido da frase. Treine leitura em voz alta."},
+      {mat:"Matemática",topic:"Regra de Três Simples",diff:"Média",tip:"As grandezas são direta ou inversamente proporcionais?"},
+      {mat:"Português",topic:"Pontuação II: Ponto-e-vírgula, Dois-pontos",diff:"Média",tip:"Dois-pontos anuncia; travessão isola."},
+      {mat:"História",topic:"Brasil Colônia III: Independência e Império I",diff:"Média",tip:"Independência é MUITO cobrada. Quem? Quando? Por quê?"},
+      {mat:"Simulado",topic:"SIMULADO 1 — Prova Completa",diff:"—",tip:"CONDIÇÕES REAIS: lugar silencioso, sem celular."}
+    ]},
+    {num:5,title:"Equações, Figuras de Linguagem e Império",sub:"Matemática + Português + História + Biologia",days:[
+      {mat:"Matemática",topic:"Equação do 1º Grau",diff:"Média",tip:"Isole a incógnita passo a passo, sempre escreva."},
+      {mat:"Português",topic:"Figuras de Linguagem I: Metáfora, Metonímia",diff:"Média",tip:"Saiba identificar a intenção por trás da figura."},
+      {mat:"Matemática",topic:"Sistema de Equações 2x2",diff:"Média",tip:"Prefira substituição quando há variável isolada."},
+      {mat:"Português",topic:"Figuras de Linguagem II: Ironia, Hipérbole",diff:"Média",tip:"Ironia é campeã em charges e crônicas."},
+      {mat:"História",topic:"Brasil Império II: D. Pedro II e Abolição",diff:"Média",tip:"Lei Áurea (13/05/1888) cai em todo vestibulinho."},
+      {mat:"Biologia",topic:"Ecologia I: Cadeias e Teias Alimentares",diff:"Média",tip:"Ecologia é o tópico MAIS cobrado em Ciências."}
+    ]},
+    {num:6,title:"Geometria Básica, Ortografia e República",sub:"Matemática + Português + História + Simulado",days:[
+      {mat:"Matemática",topic:"Geometria Plana I: Triângulos e Quadriláteros",diff:"Média",tip:"Triângulo = b×h/2; Retângulo = l×L."},
+      {mat:"Português",topic:"Ortografia e Acentuação",diff:"Fácil-Média",tip:"Proparoxítonas são SEMPRE acentuadas."},
+      {mat:"Matemática",topic:"Geometria Plana II: Círculo",diff:"Média",tip:"Área = πr²; Comprimento = 2πr. Pi ≈ 3,14."},
+      {mat:"Português",topic:"Verbos I: Modos e Tempos Verbais",diff:"Média",tip:"O tempo verbal muda o sentido do texto."},
+      {mat:"História",topic:"Primeira República e Era Vargas",diff:"Média",tip:"Era Vargas: CLT, industrialização. Saiba o contexto."},
+      {mat:"Simulado",topic:"Revisão + Simulado Semanas 5–6",diff:"—",tip:"Compare desempenho com o simulado anterior."}
+    ]},
+    {num:7,title:"Regra de Três Composta, Verbos e Ditadura",sub:"Matemática + Português + História + Biologia",days:[
+      {mat:"Matemática",topic:"Regra de Três Composta",diff:"Média-Alta",tip:"Monte uma tabela com as grandezas."},
+      {mat:"Português",topic:"Verbos II: Conjugação e Irregulares",diff:"Média",tip:"Irregulares: fazer (fiz), trazer (trouxe), vir (vim)."},
+      {mat:"Matemática",topic:"Expressões Numéricas e Potenciação",diff:"Média",tip:"Parênteses → Potências → × ÷ → + −"},
+      {mat:"Português",topic:"Coesão e Coerência Textual",diff:"Média-Alta",tip:"'Qual pronome retoma...' é muito frequente."},
+      {mat:"História",topic:"Ditadura Militar e Redemocratização",diff:"Média",tip:"AI-5 (1968) = fase mais dura. Diretas Já (1983–84)."},
+      {mat:"Biologia",topic:"Ecologia II: Biomas Brasileiros",diff:"Média",tip:"Caatinga = semiárido + vegetação espinhosa."}
+    ]},
+    {num:8,title:"Revisão Geral Meses 1–2 + Simulado Completo",sub:"Revisão intensiva de todas as matérias",days:[
+      {mat:"Revisão",topic:"Português: Revisão Intensiva",diff:"—",tip:"Use o caderno de erros. Foque onde mais errou."},
+      {mat:"Revisão",topic:"Matemática: Revisão Intensiva",diff:"—",tip:"Refaça cada tipo de questão que errou."},
+      {mat:"Revisão",topic:"História + Geografia: Revisão",diff:"—",tip:"Leia um resumo rápido de linha do tempo."},
+      {mat:"Revisão",topic:"Biologia + Revisão Geral",diff:"—",tip:"Explique em voz alta os principais conceitos."},
+      {mat:"Simulado",topic:"SIMULADO 1 — Prova Completa (50q, 4h)",diff:"—",tip:"CONDIÇÕES REAIS: lugar silencioso, sem celular."},
+      {mat:"Análise",topic:"Análise do Simulado 1",diff:"—",tip:"Identifique os 3 tópicos mais problemáticos."}
+    ]}
+  ]},
+  {phase:2,name:"O Desenvolvimento",desc:"Expandindo para todas as matérias",weeks:"9–16",color:"#10b981",weeks_data:[
+    {num:9,title:"Geometria Avançada, Regência e Rev. Industrial",sub:"Matemática + Português + História + Biologia",days:[
+      {mat:"Matemática",topic:"Teorema de Pitágoras",diff:"Média",tip:"Pitágoras CAI EM TODA prova. a² = b² + c²."},
+      {mat:"Português",topic:"Regência Verbal",diff:"Média-Alta",tip:"Monte lista dos verbos que exigem preposição."},
+      {mat:"Matemática",topic:"Semelhança de Triângulos e Tales",diff:"Média-Alta",tip:"Tales: razões entre segmentos. Sempre desenhe."},
+      {mat:"Português",topic:"Regência Nominal",diff:"Média",tip:"Estude junto com regência verbal."},
+      {mat:"História",topic:"Revolução Industrial e Capitalismo",diff:"Média",tip:"A ETEC cobra os IMPACTOS sociais, não a cronologia."},
+      {mat:"Biologia",topic:"Fotossíntese e Respiração Celular",diff:"Média",tip:"Fotossíntese: CO₂+H₂O→glicose+O₂. Decorar equação!"}
+    ]},
+    {num:10,title:"Estatística, Crase e Guerras Mundiais",sub:"Matemática + Português + História + Simulado",days:[
+      {mat:"Matemática",topic:"Estatística: Média, Moda e Mediana",diff:"Média",tip:"Mediana = valor central (dados ordenados)."},
+      {mat:"Português",topic:"Crase",diff:"Média-Alta",tip:"Teste: substitua por 'ao'. Se ficar natural, há crase."},
+      {mat:"Matemática",topic:"Leitura de Gráficos e Tabelas",diff:"Média",tip:"Gráficos aparecem em todas as matérias na ETEC."},
+      {mat:"Português",topic:"Interpretação Avançada: Inferência",diff:"Alta",tip:"Esse tipo diferencia quem passa de quem não passa."},
+      {mat:"História",topic:"Primeira e Segunda Guerra Mundial",diff:"Média",tip:"Mais importante: contexto e CONSEQUÊNCIAS."},
+      {mat:"Simulado",topic:"Revisão + Simulado Parcial (30q)",diff:"—",tip:"Classifique erros: 'não sabia' vs 'interpretei errado'."}
+    ]},
+    {num:11,title:"Geometria Espacial, Análise Sintática e Guerra Fria",sub:"Matemática + Português + História + Biologia",days:[
+      {mat:"Matemática",topic:"Geometria Espacial: Prismas e Cilindro",diff:"Média-Alta",tip:"Volume de cilindro = π×r²×h. Contexto: tanque d'água."},
+      {mat:"Português",topic:"Análise Sintática I: Sujeito e Predicado",diff:"Média",tip:"'Qual o sujeito da oração' é frequente na ETEC."},
+      {mat:"Matemática",topic:"Geometria Espacial: Pirâmides e Cones",diff:"Média-Alta",tip:"Foque em identificar qual fórmula usar."},
+      {mat:"Português",topic:"Análise Sintática II: Objetos",diff:"Média-Alta",tip:"Regência e crase dependem de OD vs OI."},
+      {mat:"História",topic:"Guerra Fria: URSS, EUA e Corrida Espacial",diff:"Média",tip:"A ETEC já cobrou a cadela Laika no espaço!"},
+      {mat:"Biologia",topic:"Corpo Humano I: Sistemas Digestório e Respiratório",diff:"Média",tip:"Faça tabela: órgão / função / doença relacionada."}
+    ]},
+    {num:12,title:"Probabilidade, Morfossintaxe e Geopolítica",sub:"Matemática + Português + Geografia + Revisão",days:[
+      {mat:"Matemática",topic:"Probabilidade Básica",diff:"Média",tip:"P sempre entre 0 e 1. Certeza=1; impossível=0."},
+      {mat:"Português",topic:"Período Composto: Coordenação",diff:"Média-Alta",tip:"'Mas/porém'=oposição; 'logo/portanto'=conclusão."},
+      {mat:"Matemática",topic:"Análise Combinatória: Permutação",diff:"Alta",tip:"Identifique se a ordem importa no problema."},
+      {mat:"Português",topic:"Período Composto: Subordinação",diff:"Alta",tip:"Identifique a principal e a subordinada."},
+      {mat:"Geografia",topic:"Geopolítica: Globalização e Blocos Econômicos",diff:"Média",tip:"ETEC cobra globalização com ângulo crítico."},
+      {mat:"Revisão",topic:"Revisão Semanas 11–12 + Caderno de Erros",diff:"—",tip:"Visualize onde estão concentrados os seus erros."}
+    ]},
+    {num:13,title:"Funções, Semântica e Urbanização",sub:"Matemática + Português + Geografia + Biologia",days:[
+      {mat:"Matemática",topic:"Função do 1º Grau (Função Afim)",diff:"Média-Alta",tip:"ETEC pede interpretação de gráfico, não contas."},
+      {mat:"Português",topic:"Semântica: Sinonímia, Antonímia, Polissemia",diff:"Média",tip:"'No contexto, a palavra X significa...' = muito frequente."},
+      {mat:"Matemática",topic:"Função do 2º Grau (Introdução)",diff:"Alta",tip:"Saiba identificar e calcular f(x) dado x."},
+      {mat:"Português",topic:"Variação Linguística",diff:"Média",tip:"Variação = diversidade, não erro."},
+      {mat:"Geografia",topic:"Urbanização Brasileira",diff:"Média",tip:"'Ilha de calor urbana' caiu na ETEC 2025!"},
+      {mat:"Biologia",topic:"Corpo Humano II: Sistema Circulatório e Excretor",diff:"Média",tip:"Monte esquemas do coração e do rim com suas funções."}
+    ]},
+    {num:14,title:"Equação 2º Grau, Interpretação Avançada e Ciências",sub:"Matemática + Português + Química + Simulado",days:[
+      {mat:"Matemática",topic:"Equação do 2º Grau e Fórmula de Bhaskara",diff:"Alta",tip:"Δ<0: sem raiz. Δ=0: uma raiz. Δ>0: duas raízes."},
+      {mat:"Português",topic:"Interpretação: Charges e Textos Multimodais",diff:"Média-Alta",tip:"Charges: quem são as figuras? Qual a crítica?"},
+      {mat:"Matemática",topic:"Revisão: Porcentagem + Geometria + Equações",diff:"—",tip:"Simule condições de prova: sem consulta, com tempo."},
+      {mat:"Português",topic:"Interpretação: Textos Científicos e Jornalísticos",diff:"Média-Alta",tip:"ETEC usa muito: meio ambiente, saúde e tecnologia."},
+      {mat:"Química",topic:"Matéria, Misturas e Estados Físicos",diff:"Média",tip:"Solução (homogênea) vs suspensão (heterogênea)."},
+      {mat:"Simulado",topic:"SIMULADO 2 — Prova Completa",diff:"—",tip:"Compare com o Simulado 1. Deve ter melhorado!"}
+    ]},
+    {num:15,title:"Física Básica, Textos Argumentativos e Clima",sub:"Física + Português + Geografia + Biologia",days:[
+      {mat:"Física",topic:"Cinemática: Velocidade Média e MRU",diff:"Média",tip:"Cinemática aparece com contexto (trator, carro em estrada)."},
+      {mat:"Português",topic:"Texto Dissertativo-Argumentativo",diff:"Média",tip:"Saber identificar a tese é cobrado em interpretação."},
+      {mat:"Física",topic:"Termologia: Calor e Temperatura",diff:"Média",tip:"'Ilha de calor urbana' envolve irradiação e convecção!"},
+      {mat:"Português",topic:"Produção Textual: Resumo e Síntese",diff:"Média",tip:"Resumir ajuda a identificar a ideia principal."},
+      {mat:"Geografia",topic:"Clima e Vegetação do Brasil",diff:"Média",tip:"Equatorial=Amazônia; semiárido=Caatinga; subtropical=Pampa."},
+      {mat:"Biologia",topic:"Corpo Humano III: Sistema Nervoso e Endócrino",diff:"Média",tip:"Nervoso=resposta rápida; endócrino=resposta lenta."}
+    ]},
+    {num:16,title:"Física Avançada, Revisão Geral e Relevo",sub:"Física + Revisão + Geografia + Simulado",days:[
+      {mat:"Física",topic:"Eletricidade Básica: Circuitos e Lei de Ohm",diff:"Média-Alta",tip:"Série: resistências somam. Paralelo: resistência total < menor."},
+      {mat:"Revisão",topic:"Revisão Geral: Todos os Tópicos",diff:"—",tip:"Crie um mapa de domínio: verde/amarelo/vermelho."},
+      {mat:"Física",topic:"Eletromagnetismo e Magnetismo",diff:"Média",tip:"Terra como ímã gigante, bússola como orientação."},
+      {mat:"Português",topic:"Revisão Intensiva: Gramática Completa",diff:"—",tip:"Priorize os pontos mais errados do seu caderno."},
+      {mat:"Geografia",topic:"Relevo, Hidrografia e Recursos Naturais",diff:"Média",tip:"Maior bacia = Amazonas; maior extensão = Tocantins-Araguaia."},
+      {mat:"Simulado",topic:"SIMULADO 3 — Prova Completa",diff:"—",tip:"Crie um gráfico da sua evolução nos 3 simulados."}
+    ]}
+  ]},
+  {phase:3,name:"O Refinamento",desc:"Integrando conhecimentos",weeks:"17–24",color:"#f59e0b",weeks_data:[
+    {num:17,title:"Química Completa, Gráficos e Meio Ambiente",sub:"Química + Matemática + Biologia",days:[
+      {mat:"Química",topic:"Substâncias e Compostos",diff:"Média",tip:"ETEC cobra: 'substância simples ou composta?' Conte os elementos."},
+      {mat:"Matemática",topic:"Revisão: Leitura de Gráficos",diff:"—",tip:"Gráficos em todas as matérias. Treine extrair e comparar dados."},
+      {mat:"Química",topic:"Ácidos, Bases e pH",diff:"Média",tip:"pH do suco gástrico ≈ 2; pH do sangue ≈ 7,4."},
+      {mat:"Matemática",topic:"Juros Simples",diff:"Média",tip:"M = C(1+i×t). Contexto: compra e empréstimo."},
+      {mat:"Biologia",topic:"Meio Ambiente: Ciclos Biogeoquímicos",diff:"Média",tip:"Ciclo da água: evaporação→condensação→precipitação."},
+      {mat:"Química",topic:"Reações Químicas e Separação de Misturas",diff:"Média",tip:"Destilação do óleo de cravo já caiu na ETEC!"}
+    ]},
+    {num:18,title:"Física e Química Avançadas, Gramática Completa",sub:"Física + Português + Química + Simulado",days:[
+      {mat:"Física",topic:"Energia: Fontes Renováveis e Não Renováveis",diff:"Média",tip:"ETEC cobra com ângulo de sustentabilidade."},
+      {mat:"Português",topic:"Revisão Completa de Concordância",diff:"Média-Alta",tip:"Concordância em certo/errado. Treine com frases de provas."},
+      {mat:"Física",topic:"Óptica Básica e Ondulatória",diff:"Média",tip:"Reflexão: ângulo de incidência = ângulo de reflexão."},
+      {mat:"Português",topic:"Crase, Regência e Colocação Pronominal",diff:"Alta",tip:"Mais complexos da gramática. Use questões de vestibulinho."},
+      {mat:"História",topic:"Movimentos Sociais e Ambientais",diff:"Média",tip:"Chico Mendes: quem foi, por que foi assassinado, legado."},
+      {mat:"Simulado",topic:"SIMULADO 4 — Prova Completa",diff:"—",tip:"Meta: ≥ 60% de acertos. Anote áreas abaixo de 50%."}
+    ]},
+    {num:19,title:"Genética, Evolução e Revisão de Matemática",sub:"Biologia + Matemática + Química",days:[
+      {mat:"Biologia",topic:"Genética Básica: Hereditariedade",diff:"Média-Alta",tip:"Saiba montar o Quadrado de Punnett."},
+      {mat:"Matemática",topic:"Revisão: Equações + Geometria + Probabilidade",diff:"—",tip:"Simule: 20 questões em 1h20min. Corrija os erros."},
+      {mat:"Biologia",topic:"Evolução: Darwin e Seleção Natural",diff:"Média",tip:"ETEC contextualiza com ecologia (adaptação animal)."},
+      {mat:"Matemática",topic:"Revisão: Funções e Análise de Dados",diff:"—",tip:"Priorize ANÁLISE de gráfico, não cálculo puro."},
+      {mat:"Química",topic:"Química Orgânica Básica",diff:"Média",tip:"Não precisa nomear compostos. Use exemplos cotidianos."},
+      {mat:"Biologia",topic:"Saúde Pública: Doenças e Prevenção",diff:"Média",tip:"Dengue, COVID, gripe, malária: agente e transmissão."}
+    ]},
+    {num:20,title:"Revisão Temática — Ciências Completas",sub:"Revisão intensiva de todas as Ciências",days:[
+      {mat:"Biologia",topic:"Revisão Completa de Biologia",diff:"—",tip:"Biologia corresponde a ~10–15% da prova."},
+      {mat:"Química",topic:"Revisão Completa de Química",diff:"—",tip:"Química é ~5–8%. Foque nas questões cotidianas."},
+      {mat:"Física",topic:"Revisão Completa de Física",diff:"—",tip:"Física é ~5–8%. As questões trazem contexto."},
+      {mat:"História",topic:"Revisão Completa de História",diff:"—",tip:"Monte linha do tempo: pré-colonial→ditadura."},
+      {mat:"Geografia",topic:"Revisão Completa de Geografia",diff:"—",tip:"Use o mapa do Brasil e identifique cada bioma."},
+      {mat:"Simulado",topic:"SIMULADO 5: Foco em Ciências e Humanas",diff:"—",tip:"≥70% de acertos: está bem! Abaixo: identifique tópicos."}
+    ]},
+    {num:21,title:"Revisão Temática — Português Avançado",sub:"Maratona de questões de Português",days:[
+      {mat:"Português",topic:"Interpretação de Texto: Maratona I",diff:"Alta",tip:"Leia o texto inteiro, depois questões, depois confirme."},
+      {mat:"Português",topic:"Gramática: Maratona I",diff:"Alta",tip:"Questões de gramática têm resposta objetiva."},
+      {mat:"Português",topic:"Interpretação: Charges e Poesias",diff:"Alta",tip:"Exigem leitura mais lenta e atenção ao não dito."},
+      {mat:"Português",topic:"Gramática: Maratona II",diff:"—",tip:"Se acertar 100% numa categoria, passe para outra."},
+      {mat:"Português",topic:"Interpretação: Textos Científicos",diff:"Alta",tip:"Textos científicos: meio ambiente, biologia ou saúde."},
+      {mat:"Simulado",topic:"SIMULADO 6: Foco em Português",diff:"—",tip:"Meta para Português: ≥ 70% de acertos."}
+    ]},
+    {num:22,title:"Revisão Temática — Matemática Completa",sub:"Maratona de questões de Matemática",days:[
+      {mat:"Matemática",topic:"Aritmética e Porcentagem: Maratona",diff:"Alta",tip:"Se ainda errar aqui, dedique mais 1h/dia."},
+      {mat:"Matemática",topic:"Geometria: Maratona",diff:"Alta",tip:"Desenhe o esquema de cada problema antes de calcular."},
+      {mat:"Matemática",topic:"Álgebra: Maratona",diff:"Alta",tip:"Escreva cada passo. Erros de sinal são os mais comuns."},
+      {mat:"Matemática",topic:"Probabilidade, Estatística e Combinatória",diff:"Alta",tip:"Probabilidade ou contagem? Com repetição?"},
+      {mat:"Matemática",topic:"Resolução de Problemas Interdisciplinares",diff:"Alta",tip:"Muitas questões combinam ciências + cálculo."},
+      {mat:"Simulado",topic:"SIMULADO 7: Foco em Matemática",diff:"—",tip:"Meta: ≥65% de acertos. Erro de conta ou interpretação?"}
+    ]},
+    {num:23,title:"Integração e Interdisciplinaridade",sub:"Questões que combinam múltiplas matérias",days:[
+      {mat:"Interdisciplinar",topic:"Biologia + Química: Fotossíntese e Reações",diff:"Média-Alta",tip:"ETEC adora questões interdisciplinares!"},
+      {mat:"Interdisciplinar",topic:"Matemática + Ciências: Cálculos em Contexto",diff:"Média-Alta",tip:"Identifique: ciência de base, dados, o que calcular."},
+      {mat:"Interdisciplinar",topic:"Geografia + História: Brasil e Mundo",diff:"Média",tip:"'Que bioma/clima predomina nessa região?'"},
+      {mat:"Interdisciplinar",topic:"Física + Química + Biologia: Ciências Integradas",diff:"Média-Alta",tip:"Treine pensar: 'Que conceito vou aplicar?'"},
+      {mat:"Português",topic:"Leitura de Textos Técnicos e Científicos",diff:"Alta",tip:"Vocabulário técnico: leia o texto inteiro para contexto."},
+      {mat:"Simulado",topic:"SIMULADO 8 — Condições Reais",diff:"—",tip:"Meta geral: ≥ 65% de acertos totais."}
+    ]},
+    {num:24,title:"Reforço nos Pontos Fracos + Revisão Geral",sub:"Estudo personalizado baseado no caderno de erros",days:[
+      {mat:"Reforço",topic:"Ponto Fraco 1: menor % de acertos",diff:"—",tip:"Seja honesto: qual tópico você mais evita?"},
+      {mat:"Reforço",topic:"Ponto Fraco 2: segundo mais problemático",diff:"—",tip:"Ponto fraco precisa chegar a ≥50% de acertos."},
+      {mat:"Revisão",topic:"Todos os Conteúdos: Rodada Rápida",diff:"—",tip:"Revisão rápida ativa a memória de longo prazo."},
+      {mat:"Reforço",topic:"Ponto Fraco 3: terceiro mais problemático",diff:"—",tip:"Releia as resoluções em voz alta como se explicasse."},
+      {mat:"Revisão",topic:"Garimpo em Provas Antigas (2019–2025)",diff:"—",tip:"Padrões da ETEC: meio ambiente, charges, cálculo real."},
+      {mat:"Simulado",topic:"SIMULADO 9 — Meta: ≥68% de acertos",diff:"—",tip:"Com 6 semanas para a prova, você deve estar em ~70%."}
+    ]}
+  ]},
+  {phase:4,name:"A Lapidação",desc:"Velocidade + Precisão + Controle",weeks:"25–29",color:"#ef4444",weeks_data:[
+    {num:25,title:"Sprint Final — Simulados Intensivos I",sub:"Revisão das provas mais recentes + análise",days:[
+      {mat:"Revisão",topic:"Português: Interpretação Final",diff:"—",tip:"A ETEC evolui os textos para temas atuais."},
+      {mat:"Revisão",topic:"Matemática: Questões Difíceis",diff:"—",tip:"Questões que você mais errou ao longo dos 6 meses."},
+      {mat:"Simulado",topic:"SIMULADO 10: Prova Oficial Recente",diff:"—",tip:"Use a prova mais recente do site oficial."},
+      {mat:"Análise",topic:"Análise Profunda do SIMULADO 10",diff:"—",tip:"Cada erro corrigido = um ponto a mais na prova real."},
+      {mat:"Revisão",topic:"Ciências e Humanas: Revisão Final",diff:"—",tip:"Consolidar, não aprender coisa nova."},
+      {mat:"Simulado",topic:"SIMULADO 11 — Prova Completa",diff:"—",tip:"Calcule sua média nos últimos 3 simulados."}
+    ]},
+    {num:26,title:"Sprint Final — Revisão por Urgência",sub:"Foco nos tópicos com menor % de acertos",days:[
+      {mat:"Revisão",topic:"Tópicos com <50% de acertos nos simulados",diff:"—",tip:"Urgência: chegar a pelo menos 50% antes da prova."},
+      {mat:"Português",topic:"Gramática Final",diff:"—",tip:"Faça um 'cola mental' das regras principais."},
+      {mat:"Simulado",topic:"SIMULADO 12: Meia Prova Cronometrada",diff:"—",tip:"Cada questão: média 4–5 min. Treine velocidade."},
+      {mat:"Matemática",topic:"Fórmulas e Esquemas: Revisão",diff:"—",tip:"Criar a folha fixa as fórmulas na memória."},
+      {mat:"Ciências",topic:"Revisão por Questões Antigas (2023–2025)",diff:"—",tip:"Temas se repetem com contexto diferente."},
+      {mat:"Descanso",topic:"Revisão Leve + Organização Mental",diff:"—",tip:"Descanso é parte do estudo. Consolida memórias."}
+    ]},
+    {num:27,title:"Sprint Final — Simulados Todos os Dias",sub:"Últimas 3 semanas: ritmo máximo",days:[
+      {mat:"Simulado",topic:"SIMULADO 13 — Prova Completa",diff:"—",tip:"Condições absolutamente reais. Desligue o celular."},
+      {mat:"Análise",topic:"Análise SIMULADO 13 + Revisão de Erros",diff:"—",tip:"Última semana de análise profunda."},
+      {mat:"Simulado",topic:"SIMULADO 14: Meia Prova (Português + Mat.)",diff:"—",tip:"O tempo é seu segundo maior inimigo."},
+      {mat:"Revisão",topic:"Revisão Rápida de Todos os Conteúdos",diff:"—",tip:"Não tente aprender coisa nova nessa fase."},
+      {mat:"Simulado",topic:"SIMULADO 15 — Prova Completa",diff:"—",tip:"Se ≥70%, está no caminho certo."},
+      {mat:"Revisão",topic:"Análise SIMULADO 15 + Revisão Focada",diff:"—",tip:"Erros nessa fase são ouro. Corrija agora."}
+    ]},
+    {num:28,title:"Penúltima Semana: Refinamento Total",sub:"Últimos simulados completos + organização",days:[
+      {mat:"Simulado",topic:"SIMULADO 16 — Prova Completa",diff:"—",tip:"Respire fundo, leia devagar, controle a ansiedade."},
+      {mat:"Português",topic:"Últimas Questões de Interpretação",diff:"—",tip:"Onde estava a resposta correta?"},
+      {mat:"Simulado",topic:"SIMULADO 17: 30 Questões Ciências + Humanas",diff:"—",tip:"Ciências e Humanas = ~50% da prova."},
+      {mat:"Matemática",topic:"Últimas Questões de Matemática",diff:"—",tip:"Se travou numa fórmula, anote. Não deixe travar."},
+      {mat:"Simulado",topic:"SIMULADO 18 — Prova Completa Final",diff:"—",tip:"Esse simulado é para ganhar confiança."},
+      {mat:"Descanso",topic:"Revisão Leve e Preparação Mental",diff:"—",tip:"Separe documentos para o dia da prova."}
+    ]},
+    {num:29,title:"Última Semana: Consolidação e Confiança",sub:"A semana mais importante da sua jornada",days:[
+      {mat:"Revisão",topic:"Conteúdos Mais Cobrados",diff:"—",tip:"Mais cobrados: Interpretação, Porcentagem, Ecologia, Biomas."},
+      {mat:"Simulado",topic:"SIMULADO 19: Meia Prova + Análise Rápida",diff:"—",tip:"Última semana = manter ritmo, não estressar."},
+      {mat:"Revisão",topic:"Fórmulas e Conceitos Chave: Revisão Final",diff:"—",tip:"Revisão de curto prazo ativa a memória de trabalho."},
+      {mat:"Descanso",topic:"Leitura Leve e Relaxamento",diff:"—",tip:"Não force o cérebro nos últimos dias."},
+      {mat:"Preparação",topic:"Véspera da Prova: Organização Final",diff:"—",tip:"NA VÉSPERA: revisão leve e sono. Durma 8h."},
+      {mat:"Prova",topic:"DIA DA PROVA — Vestibulinho ETEC",diff:"—",tip:"ESTRATÉGIA: Mais fáceis primeiro. Não deixe em branco!"}
+    ]}
+  ]}
+];
+
+const TOPICS = {
+  "Português": [
+    {name:"Interpretação de texto (ideia principal, inferência, intenção do autor)",priority:"max",diff:"Média-Alta"},
+    {name:"Tipos e gêneros textuais (narrativo, dissertativo, charge, crônica, infográfico)",priority:"max",diff:"Média"},
+    {name:"Figuras de linguagem (metáfora, ironia, hipérbole, antítese, eufemismo)",priority:"high",diff:"Média"},
+    {name:"Classes de palavras (substantivo, adjetivo, pronome, verbo, advérbio, conjunção)",priority:"high",diff:"Média"},
+    {name:"Concordância verbal e nominal",priority:"high",diff:"Média"},
+    {name:"Pontuação (vírgula, ponto-e-vírgula, dois-pontos, travessão)",priority:"high",diff:"Média"},
+    {name:"Coesão e coerência textual",priority:"high",diff:"Média-Alta"},
+    {name:"Semântica (sinonímia, antonímia, polissemia, denotação/conotação)",priority:"med",diff:"Média"},
+    {name:"Ortografia e acentuação",priority:"med",diff:"Fácil-Média"},
+    {name:"Regência verbal e nominal",priority:"med",diff:"Média-Alta"},
+    {name:"Crase",priority:"med",diff:"Alta"},
+    {name:"Análise sintática (sujeito, predicado, objetos)",priority:"med",diff:"Alta"},
+    {name:"Variação linguística",priority:"med",diff:"Média"},
+    {name:"Período composto (coordenação e subordinação)",priority:"low",diff:"Alta"}
+  ],
+  "Matemática": [
+    {name:"Frações e números decimais",priority:"max",diff:"Fácil-Média"},
+    {name:"Porcentagem (desconto, aumento, taxa)",priority:"max",diff:"Média"},
+    {name:"Regra de três simples e composta",priority:"max",diff:"Média"},
+    {name:"Equação do 1º grau",priority:"max",diff:"Média"},
+    {name:"Geometria plana (área, perímetro — triângulo, quadriláteros, círculo)",priority:"high",diff:"Média"},
+    {name:"Teorema de Pitágoras",priority:"high",diff:"Média"},
+    {name:"Leitura e interpretação de gráficos e tabelas",priority:"high",diff:"Média"},
+    {name:"Estatística básica (média, moda, mediana)",priority:"high",diff:"Média"},
+    {name:"Razão e proporção",priority:"high",diff:"Fácil-Média"},
+    {name:"Geometria espacial (prismas, cilindro — volume)",priority:"med",diff:"Média-Alta"},
+    {name:"Semelhança de triângulos e Teorema de Tales",priority:"med",diff:"Média-Alta"},
+    {name:"Probabilidade básica",priority:"med",diff:"Média"},
+    {name:"Potenciação e radiciação",priority:"med",diff:"Média"},
+    {name:"Funções do 1º grau",priority:"med",diff:"Média-Alta"},
+    {name:"Sistema de equações 2x2",priority:"med",diff:"Média"},
+    {name:"Equação do 2º grau (Bhaskara)",priority:"low",diff:"Alta"},
+    {name:"Análise combinatória (permutação, arranjo)",priority:"low",diff:"Alta"},
+    {name:"Função do 2º grau",priority:"low",diff:"Alta"},
+    {name:"Juros simples",priority:"low",diff:"Média"}
+  ],
+  "Biologia": [
+    {name:"Ecologia (cadeia alimentar, níveis tróficos, relações ecológicas)",priority:"max",diff:"Média"},
+    {name:"Biomas brasileiros (Amazônia, Cerrado, Caatinga, Mata Atlântica, Pampa, Pantanal)",priority:"max",diff:"Média"},
+    {name:"Fotossíntese e respiração celular",priority:"high",diff:"Média"},
+    {name:"Corpo humano: sistemas digestório e respiratório",priority:"high",diff:"Média"},
+    {name:"Corpo humano: sistema circulatório e excretor",priority:"high",diff:"Média"},
+    {name:"Meio ambiente (impactos humanos, ciclo da água, carbono)",priority:"high",diff:"Média"},
+    {name:"Botânica básica (estrutura de plantas, vasos condutores)",priority:"med",diff:"Média"},
+    {name:"Genética básica (hereditariedade, Quadrado de Punnett)",priority:"med",diff:"Média-Alta"},
+    {name:"Evolução (Darwin, seleção natural, adaptação)",priority:"med",diff:"Média"},
+    {name:"Saúde pública (doenças, vacinação, prevenção)",priority:"med",diff:"Média"},
+    {name:"Corpo humano: sistema nervoso e endócrino",priority:"low",diff:"Média"},
+    {name:"Célula (estrutura, organelas, diferença animal/vegetal)",priority:"low",diff:"Média"}
+  ],
+  "Química": [
+    {name:"Substâncias (simples vs composta, mistura homogênea/heterogênea)",priority:"high",diff:"Fácil-Média"},
+    {name:"Estados físicos da matéria e mudanças de estado",priority:"high",diff:"Média"},
+    {name:"Separação de misturas (filtração, destilação, decantação)",priority:"high",diff:"Média"},
+    {name:"Ácidos, bases e pH",priority:"med",diff:"Média"},
+    {name:"Reações químicas simples (combustão, oxidação, síntese)",priority:"med",diff:"Média"},
+    {name:"Química orgânica básica (compostos cotidianos)",priority:"low",diff:"Média"},
+    {name:"Tabela periódica (noções básicas)",priority:"low",diff:"Média-Alta"}
+  ],
+  "Física": [
+    {name:"Cinemática (velocidade, tempo, distância)",priority:"high",diff:"Média"},
+    {name:"Termologia (calor, temperatura, condução, convecção, radiação)",priority:"high",diff:"Média"},
+    {name:"Energia (fontes renováveis e não renováveis)",priority:"high",diff:"Média"},
+    {name:"Eletricidade básica (circuitos simples, Lei de Ohm)",priority:"med",diff:"Média"},
+    {name:"Magnetismo e eletromagnetismo",priority:"med",diff:"Média"},
+    {name:"Óptica básica (propagação da luz, reflexão)",priority:"low",diff:"Média"},
+    {name:"Mecânica (força, pressão, máquinas simples)",priority:"low",diff:"Média"}
+  ],
+  "História": [
+    {name:"Brasil Colônia (descobrimento, escravidão, quilombos, ciclos econômicos)",priority:"max",diff:"Fácil-Média"},
+    {name:"Brasil Império (D. Pedro I e II, Lei Áurea, Proclamação da República)",priority:"max",diff:"Fácil-Média"},
+    {name:"República: Era Vargas e industrialização",priority:"high",diff:"Média"},
+    {name:"Ditadura Militar (1964–1985) e redemocratização",priority:"high",diff:"Média"},
+    {name:"Revolução Industrial e capitalismo",priority:"med",diff:"Média"},
+    {name:"Primeira e Segunda Guerra Mundial",priority:"med",diff:"Média"},
+    {name:"Guerra Fria e corrida espacial",priority:"med",diff:"Média"},
+    {name:"Movimentos sociais e ambientais (Chico Mendes, MST, direitos humanos)",priority:"med",diff:"Fácil-Média"},
+    {name:"História Antiga (Egito, Grécia, Roma)",priority:"low",diff:"Fácil-Média"},
+    {name:"Idade Média (feudalismo, cruzadas, Igreja)",priority:"low",diff:"Média"}
+  ],
+  "Geografia": [
+    {name:"Biomas brasileiros e características (clima + vegetação + fauna)",priority:"max",diff:"Fácil-Média"},
+    {name:"Urbanização e problemas urbanos (ilha de calor, favelas, trânsito)",priority:"high",diff:"Média"},
+    {name:"Cartografia (mapas, escala, coordenadas, fusos)",priority:"high",diff:"Fácil-Média"},
+    {name:"Clima e vegetação do Brasil",priority:"high",diff:"Média"},
+    {name:"Relevo brasileiro e mundial",priority:"med",diff:"Média"},
+    {name:"Hidrografia e recursos hídricos",priority:"med",diff:"Média"},
+    {name:"Geopolítica e globalização (blocos econômicos)",priority:"med",diff:"Média"},
+    {name:"População e migração",priority:"low",diff:"Média"},
+    {name:"Economia e desenvolvimento sustentável",priority:"low",diff:"Média"}
+  ]
+};
+
+const SIMULADOS_LIST = [
+  {num:1,week:8,focus:"Prova Completa"},
+  {num:2,week:14,focus:"Prova Completa"},
+  {num:3,week:16,focus:"Prova Completa"},
+  {num:4,week:18,focus:"Foco em Ciências"},
+  {num:5,week:20,focus:"Foco em Ciências e Humanas"},
+  {num:6,week:21,focus:"Foco em Português"},
+  {num:7,week:22,focus:"Foco em Matemática"},
+  {num:8,week:23,focus:"Condições Reais"},
+  {num:9,week:24,focus:"Prova Completa"},
+  {num:10,week:25,focus:"Prova Oficial Recente"},
+  {num:11,week:25,focus:"Prova Completa"},
+  {num:12,week:26,focus:"Meia Prova Cronometrada"},
+  {num:13,week:27,focus:"Prova Completa"},
+  {num:14,week:27,focus:"Meia Prova"},
+  {num:15,week:27,focus:"Prova Completa"},
+  {num:16,week:28,focus:"Prova Completa"},
+  {num:17,week:28,focus:"30q Ciências + Humanas"},
+  {num:18,week:28,focus:"Prova Completa Final"},
+  {num:19,week:29,focus:"Meia Prova Final"}
+];
+
+const FORMULAS = {
+  "Matemática": [
+    {label:"Porcentagem",eq:"Parte = (% / 100) × Total",desc:"Para calcular % de um número ou encontrar a porcentagem."},
+    {label:"Regra de três direta",eq:"a/b = c/x → x = (b×c)/a",desc:"Grandezas diretamente proporcionais."},
+    {label:"Área do triângulo",eq:"A = (base × altura) / 2",desc:""},
+    {label:"Área do retângulo",eq:"A = base × altura",desc:"Também serve para paralelogramo."},
+    {label:"Trapézio",eq:"A = (B + b) × h / 2",desc:"B = base maior, b = base menor."},
+    {label:"Área do círculo",eq:"A = π × r²",desc:"π ≈ 3,14159 (use 3,14 na prova)."},
+    {label:"Comprimento da circunferência",eq:"C = 2 × π × r",desc:""},
+    {label:"Volume do cilindro",eq:"V = π × r² × h",desc:"Usado para tanques, latas, tubos."},
+    {label:"Volume do cubo",eq:"V = a³",desc:""},
+    {label:"Volume do paralelepípedo",eq:"V = a × b × c",desc:""},
+    {label:"Teorema de Pitágoras",eq:"a² = b² + c²",desc:"a = hipotenusa (lado oposto ao ângulo reto)."},
+    {label:"Média aritmética",eq:"Média = Σvalores / n",desc:"Soma de todos os valores dividida pela quantidade."},
+    {label:"Velocidade média",eq:"v = d / t",desc:"Distância dividida pelo tempo."},
+    {label:"Equação do 1º grau",eq:"ax + b = 0 → x = -b/a",desc:""},
+    {label:"Bhaskara (2º grau)",eq:"x = (-b ± √Δ) / 2a · Δ = b²-4ac",desc:"Δ<0: sem raiz real. Δ=0: uma raiz. Δ>0: duas raízes."},
+    {label:"Juros simples",eq:"M = C × (1 + i × t)",desc:"M=montante, C=capital, i=taxa, t=tempo."}
+  ],
+  "Ciências": [
+    {label:"Fotossíntese",eq:"CO₂ + H₂O + luz → glicose + O₂",desc:"Ocorre nos cloroplastos (células vegetais)."},
+    {label:"Respiração celular",eq:"Glicose + O₂ → CO₂ + H₂O + ATP",desc:"Produz energia para as células."},
+    {label:"pH ácido",eq:"pH < 7",desc:"Suco gástrico ≈ 2; vinagre ≈ 3; chuva ácida < 5,6."},
+    {label:"pH neutro",eq:"pH = 7",desc:"Água pura à temperatura ambiente."},
+    {label:"pH básico",eq:"pH > 7",desc:"Bicarbonato ≈ 8; sabão ≈ 10; leite de magnésia ≈ 10."},
+    {label:"Condução de calor",eq:"Sólido → sólido (contato direto)",desc:"Ex: colher metálica no café quente."},
+    {label:"Convecção",eq:"Fluidos (líquidos e gases)",desc:"Ex: aquecimento do ar, circulação da água."},
+    {label:"Irradiação",eq:"Sem meio material",desc:"Ex: calor do sol chegando à Terra."},
+    {label:"Lei de Ohm",eq:"V = R × I",desc:"V=tensão(V), R=resistência(Ω), I=corrente(A)."},
+    {label:"Cadeia alimentar",eq:"Produtor → C.Primário → C.Secundário → Decompositor",desc:"Fluxo de energia no ecossistema."},
+    {label:"Substância simples",eq:"1 elemento químico (ex: O₂, H₂, N₂)",desc:"Todos os átomos são do mesmo elemento."},
+    {label:"Substância composta",eq:"2+ elementos (ex: H₂O, CO₂, NaCl)",desc:"Moléculas com átomos de elementos diferentes."},
+    {label:"Mistura homogênea",eq:"1 fase visível (ex: água+sal, café)",desc:"Também chamada de solução."},
+    {label:"Mistura heterogênea",eq:"2+ fases visíveis (ex: areia+água)",desc:"Fases distinguíveis a olho nu."}
+  ],
+  "Datas Históricas": [
+    {label:"1500",eq:"Chegada de Pedro Álvares Cabral ao Brasil",desc:"Início do período colonial."},
+    {label:"1549–1822",eq:"Brasil Colônia (Portugal)",desc:""},
+    {label:"1822",eq:"Independência do Brasil — D. Pedro I",desc:"7 de setembro, às margens do Ipiranga."},
+    {label:"1888",eq:"Lei Áurea — abolição da escravidão",desc:"13 de maio, assinada pela Princesa Isabel."},
+    {label:"1889",eq:"Proclamação da República",desc:"15 de novembro, Marechal Deodoro da Fonseca."},
+    {label:"1930",eq:"Revolução de 1930 — início da Era Vargas",desc:""},
+    {label:"1943",eq:"CLT — Consolidação das Leis do Trabalho",desc:"Governo Getúlio Vargas."},
+    {label:"1964",eq:"Golpe militar — início da Ditadura",desc:""},
+    {label:"1968",eq:"AI-5 — fase mais dura da Ditadura",desc:"Ato Institucional nº 5."},
+    {label:"1985",eq:"Fim da Ditadura Militar",desc:"Abertura democrática."},
+    {label:"1988",eq:"Constituição Cidadã",desc:"Redemocratização plena do Brasil."},
+    {label:"1789",eq:"Revolução Francesa",desc:"Liberdade, igualdade, fraternidade."},
+    {label:"1760–1840",eq:"Revolução Industrial (Inglaterra)",desc:""},
+    {label:"1914–1918",eq:"Primeira Guerra Mundial",desc:""},
+    {label:"1939–1945",eq:"Segunda Guerra Mundial",desc:""},
+    {label:"1947–1991",eq:"Guerra Fria (EUA × URSS)",desc:""},
+    {label:"1957",eq:"Sputnik e cadela Laika no espaço (URSS)",desc:"Já foi cobrado na ETEC!"}
+  ]
+};
+
+const RESOURCES = [
+  {icon:"📄",name:"Provas Oficiais",desc:"Baixe provas anteriores do Vestibulinho.",tag:"Oficial",tagColor:"var(--accent-bg)",tagTextColor:"var(--accent2)",url:"https://vestibulinho.etec.sp.gov.br"},
+  {icon:"📐",name:"Khan Academy",desc:"Matemática completa e gratuita.",tag:"Gratuito",tagColor:"var(--green-bg)",tagTextColor:"var(--green)",url:"https://pt.khanacademy.org"},
+  {icon:"🎬",name:"Ferretto Matemática",desc:"Excelente para matemática do fundamental.",tag:"Gratuito",tagColor:"var(--green-bg)",tagTextColor:"var(--green)",url:"https://youtube.com/@ferrretto"},
+  {icon:"🧪",name:"Paulo Jubilut",desc:"Biologia de alto nível, muito didático.",tag:"Gratuito",tagColor:"var(--green-bg)",tagTextColor:"var(--green)",url:"https://youtube.com/@paulojubilut"},
+  {icon:"📝",name:"Português com Letícia",desc:"Gramática e interpretação.",tag:"Gratuito",tagColor:"var(--green-bg)",tagTextColor:"var(--green)",url:"https://youtube.com"},
+  {icon:"⚡",name:"Física 2.0",desc:"Física contextualizada.",tag:"Gratuito",tagColor:"var(--green-bg)",tagTextColor:"var(--green)",url:"https://youtube.com"},
+  {icon:"🃏",name:"Anki Flashcards",desc:"App gratuito para memorizar fórmulas.",tag:"App",tagColor:"var(--yellow-bg)",tagTextColor:"var(--yellow)",url:"https://apps.ankiweb.net"},
+  {icon:"📓",name:"NotebookLM",desc:"Crie resumos em áudio das anotações.",tag:"IA",tagColor:"var(--orange-bg)",tagTextColor:"var(--orange)",url:"https://notebooklm.google.com"}
+];
+
+const STRATEGY = [
+  {title:"Antes de Entrar na Sala",icon:"◎",items:[
+    "Chegue pelo menos 30 minutos antes do horário de abertura dos portões.",
+    "Leve RG original (ou CNH) + comprovante impresso ou no celular.",
+    "Leve 2 canetas azuis ou pretas, borracha e lápis para o rascunho.",
+    "Não estude na manhã da prova. Tome café da manhã, respire fundo."
+  ]},
+  {title:"A Estratégia dos 3 Momentos",icon:"◉",items:[
+    "MOMENTO 1 (30 min): Leia TODAS as 50 questões. Resolva imediatamente as mais fáceis.",
+    "MOMENTO 2 (90 min): Volte às questões médias que precisam de mais raciocínio.",
+    "MOMENTO 3 (60–90 min): Enfrente as difíceis por eliminação.",
+    "NUNCA deixe em branco. Na ETEC não há desconto por erro."
+  ]},
+  {title:"Gestão de Tempo",icon:"◷",items:[
+    "50 questões em 4 horas = média de 4,8 minutos por questão.",
+    "Questões de interpretação longa: até 6 minutos.",
+    "Gramática e cálculo simples: 2–3 minutos.",
+    "Se passar de 7 min numa questão, marque a melhor intuição e pule!"
+  ]}
+];
+
+// ========== STATE ==========
+let state = {
+  currentView: 'dashboard',
+  currentWeek: 1,
+  checkedDays: JSON.parse(localStorage.getItem('etec_checked') || '{}'),
+  simulados: JSON.parse(localStorage.getItem('etec_sims') || '{}'),
+  errors: JSON.parse(localStorage.getItem('etec_errors') || '[]'),
+  topicStatus: JSON.parse(localStorage.getItem('etec_topics') || '{}'),
+  timerSessions: JSON.parse(localStorage.getItem('etec_timer_sessions') || '[]'),
+  currentSimModal: null,
+  timerInterval: null,
+  timerSeconds: 25 * 60,
+  timerRunning: false,
+  timerMode: 'pomodoro',
+  timerModeSeconds: {'pomodoro':25*60,'50':50*60,'prova':240*60,'livre':0},
+  sessionsToday: 0,
+  totalMinutesToday: 0,
+  startTime: null,
+  studentName: localStorage.getItem('etec_name') || ''
+};
+
+function saveState() {
+  localStorage.setItem('etec_checked', JSON.stringify(state.checkedDays));
+  localStorage.setItem('etec_sims', JSON.stringify(state.simulados));
+  localStorage.setItem('etec_errors', JSON.stringify(state.errors));
+  localStorage.setItem('etec_topics', JSON.stringify(state.topicStatus));
+  localStorage.setItem('etec_timer_sessions', JSON.stringify(state.timerSessions));
+}
+
+const PAGE_TITLES = {dashboard:'Painel de Hoje',schedule:'Cronograma',map:'Mapa de Matérias',simulados:'Meus Simulados',erros:'Caderno de Erros',timer:'Modo Foco',formulas:'Fórmulas Rápidas',recursos:'Materiais Gratuitos',estrategia:'Como fazer a prova'};
+
+function navigate(view) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('view-' + view).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + view + "'")) n.classList.add('active');
+  });
+  document.getElementById('page-title').textContent = PAGE_TITLES[view] || view;
+  state.currentView = view;
+  
+  if (view === 'dashboard') renderDashboard();
+  if (view === 'schedule') renderSchedule();
+  if (view === 'map') renderMap();
+  if (view === 'simulados') renderSimulados();
+  if (view === 'erros') renderErrors();
+  if (view === 'timer') renderTimer();
+  if (view === 'formulas') renderFormulas();
+  if (view === 'recursos') renderResources();
+  if (view === 'estrategia') renderStrategy();
+  
+  closeSidebar();
+  window.scrollTo(0,0);
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('sidebar-overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+function subjectColor(mat) {
+  const map = {
+    'Português':'var(--accent)','Matemática':'#059669','Biologia':'#d97706',
+    'Química':'#ea580c','Física':'#0284c7','História':'#db2777',
+    'Geografia':'#16a34a','Revisão':'#64748b','Simulado':'#dc2626',
+    'Interdisciplinar':'#9333ea','Ciências':'#ca8a04','Reforço':'#7c3aed'
+  };
+  return map[mat] || '#64748b';
+}
+
+function diffClass(d) {
+  if (!d || d === '—') return '';
+  if (d === 'Fácil') return 'diff-easy';
+  if (d === 'Fácil-Média') return 'diff-easymed';
+  if (d === 'Média') return 'diff-med';
+  if (d === 'Média-Alta') return 'diff-medhi';
+  if (d === 'Alta') return 'diff-hard';
+  return '';
+}
+
+function priorityClass(p) {
+  if (p === 'max') return 'priority-max';
+  if (p === 'high') return 'priority-high';
+  if (p === 'med') return 'priority-med';
+  return 'priority-low';
+}
+
+function priorityLabel(p) {
+  if (p === 'max') return 'MÁXIMA';
+  if (p === 'high') return 'ALTA';
+  if (p === 'med') return 'MÉDIA';
+  return 'BAIXA';
+}
+
+function getDayKey(phase, week, day) { return `p${phase}_w${week}_d${day}`; }
+function getTotalChecked() { return Object.values(state.checkedDays).filter(Boolean).length; }
+function getSimsDone() { return Object.keys(state.simulados).length; }
+function getLastScore() {
+  const keys = Object.keys(state.simulados).map(Number).sort((a,b)=>b-a);
+  if (!keys.length) return null;
+  const s = state.simulados[keys[0]];
+  return {score: (s.port||0)+(s.mat||0)+(s.cien||0)+(s.hum||0), num: keys[0]};
+}
+
+function getCurrentWeekNum() {
+  const start = new Date(localStorage.getItem('etec_start') || new Date().toISOString());
+  const diff = Math.floor((new Date() - start) / (7 * 24 * 3600 * 1000));
+  return Math.max(1, Math.min(29, diff + 1));
+}
+
+function getTopicKey(sub, i) { return `topic_${sub}_${i}`; }
+
+function renderDashboard() {
+  if (!state.studentName) {
+    const name = prompt('Qual é o seu nome? (Vamos personalizar sua experiência)');
+    if (name && name.trim()) {
+      state.studentName = name.trim();
+      localStorage.setItem('etec_name', state.studentName);
+    } else {
+      state.studentName = 'Estudante';
+    }
+  }
+  if (!localStorage.getItem('etec_start')) localStorage.setItem('etec_start', new Date().toISOString());
+
+  document.getElementById('student-name-display').textContent = state.studentName;
+  const wNum = getCurrentWeekNum();
+  document.getElementById('current-week-display').textContent = wNum;
+  document.getElementById('today-week-num').textContent = wNum;
+
+  const opts = {weekday:'long',day:'numeric',month:'long'};
+  document.getElementById('today-date-display').textContent = new Date().toLocaleDateString('pt-BR', opts);
+
+  const checked = getTotalChecked();
+  document.getElementById('stat-days').textContent = checked;
+  document.getElementById('bar-days').style.width = Math.min(100, (checked/174)*100) + '%';
+
+  const simsDone = getSimsDone();
+  document.getElementById('stat-sims').textContent = simsDone;
+  document.getElementById('bar-sims').style.width = (simsDone/19*100) + '%';
+  document.getElementById('badge-simulados').textContent = 19 - simsDone || 19;
+
+  const lastScore = getLastScore();
+  if (lastScore) {
+    document.getElementById('stat-score').textContent = lastScore.score;
+    document.getElementById('stat-score-sub').textContent = `de 50 — Simulado ${lastScore.num}`;
+    document.getElementById('bar-score').style.width = (lastScore.score/50*100) + '%';
+    document.getElementById('bar-score').style.background = lastScore.score >= 35 ? 'var(--green)' : lastScore.score >= 25 ? 'var(--yellow)' : 'var(--red)';
+  } else {
+    document.getElementById('stat-score').textContent = '–';
+    document.getElementById('stat-score-sub').textContent = 'Nenhum simulado feito';
+    document.getElementById('bar-score').style.width = '0%';
+  }
+
+  document.getElementById('stat-errors').textContent = state.errors.length;
+  document.getElementById('badge-erros').textContent = state.errors.length;
+  document.getElementById('bar-errors').style.width = Math.min(100, state.errors.length*5) + '%';
+
+  let phase = null, week = null;
+  for (const ph of SCHEDULE) {
+    for (const w of ph.weeks_data) {
+      if (w.num === wNum) { phase = ph; week = w; break; }
+    }
+    if (week) break;
+  }
+  if (!week && SCHEDULE[0]) { phase = SCHEDULE[0]; week = SCHEDULE[0].weeks_data[0]; }
+
+  const todayEl = document.getElementById('today-items');
+  if (week) {
+    const dayOfWeek = (new Date().getDay() + 6) % 7; 
+    const dayIdx = Math.min(dayOfWeek, week.days.length - 1);
+    todayEl.innerHTML = '';
+    week.days.forEach((day, i) => {
+      const key = getDayKey(phase ? phase.phase : 1, wNum, i);
+      const done = state.checkedDays[key];
+      const color = subjectColor(day.mat);
+      const isToday = i === dayIdx;
+      const el = document.createElement('div');
+      el.className = 'today-item ' + (done ? 'completed' : '');
+      if (isToday && !done) el.style.borderLeft = `4px solid ${color}`;
+      
+      el.innerHTML = `
+        <div class="today-check ${done?'done':''}" onclick="toggleDay('${key}',this)">
+          ${done ? '✓' : ''}
+        </div>
+        <div class="today-info">
+          <div class="today-subject" style="color:${color}">${day.mat}</div>
+          <div class="today-topic" style="${done?'text-decoration:line-through':''}">${day.topic}</div>
+          ${day.tip ? `<div class="today-tip">💡 ${day.tip}</div>` : ''}
+        </div>
+      `;
+      todayEl.appendChild(el);
+    });
+  }
+
+  const subjects = ['Português','Matemática','Biologia','Química','Física','História','Geografia'];
+  const subEl = document.getElementById('progress-subjects');
+  subEl.innerHTML = '';
+  subjects.forEach(sub => {
+    const topics = TOPICS[sub] || [];
+    const done = topics.filter((_, i) => state.topicStatus[getTopicKey(sub, i)] === 'green').length;
+    const pct = topics.length ? Math.round(done/topics.length*100) : 0;
+    const color = subjectColor(sub);
+    const size = 60; const r = 24; const circ = 2 * Math.PI * r;
+    const offset = circ - (pct/100)*circ;
+    
+    const el = document.createElement('div');
+    el.className = 'subject-progress';
+    el.onclick = () => navigate('map');
+    el.innerHTML = `
+      <svg class="ring" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+        <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--bg4)" stroke-width="5"/>
+        <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${color}" stroke-width="5"
+          stroke-dasharray="${circ}" stroke-dashoffset="${offset}"
+          stroke-linecap="round" transform="rotate(-90 ${size/2} ${size/2})"
+          style="transition:stroke-dashoffset 1s ease"/>
+      </svg>
+      <div class="subject-pct">${pct}%</div>
+      <div class="subject-name">${sub}</div>
+    `;
+    subEl.appendChild(el);
+  });
+}
+
+function toggleDay(key, el) {
+  const was = state.checkedDays[key];
+  state.checkedDays[key] = !was;
+  if (!was) {
+    el.classList.add('done');
+    el.textContent = '✓';
+    el.closest('.today-item').classList.add('completed');
+    showNotif('🎉 Mandou bem! Missão concluída!');
+  } else {
+    el.classList.remove('done');
+    el.textContent = '';
+    el.closest('.today-item').classList.remove('completed');
+  }
+  saveState();
+  document.getElementById('stat-days').textContent = getTotalChecked();
+  document.getElementById('bar-days').style.width = Math.min(100, getTotalChecked()/174*100) + '%';
+}
+
+function renderSchedule() {
+  const el = document.getElementById('schedule-phases');
+  el.innerHTML = '';
+  SCHEDULE.forEach(phase => {
+    const phDiv = document.createElement('div');
+    const phHead = document.createElement('div');
+    phHead.className = 'phase-header';
+    phHead.innerHTML = `
+      <div class="phase-num" style="background:${phase.color}22;color:${phase.color}">${phase.phase}</div>
+      <div class="phase-info">
+        <div class="phase-name">Fase ${phase.phase}: ${phase.name}</div>
+        <div class="phase-desc">${phase.desc}</div>
+      </div>
+      <div class="phase-weeks">Semanas ${phase.weeks}</div>
+      <div class="phase-chevron">›</div>
+    `;
+    const weeksDiv = document.createElement('div');
+    weeksDiv.className = 'weeks-container';
+    phHead.onclick = () => { phHead.classList.toggle('open'); weeksDiv.classList.toggle('open'); };
+
+    phase.weeks_data.forEach(week => {
+      const wHead = document.createElement('div');
+      wHead.className = 'week-header';
+      const wDone = week.days.filter((_,i) => state.checkedDays[getDayKey(phase.phase, week.num, i)]).length;
+      wHead.innerHTML = `
+        <div>
+          <div class="week-title">Semana ${week.num}: ${week.title}</div>
+          <div class="week-subtitle">${week.sub} — ${wDone}/${week.days.length} dias</div>
+        </div>
+        <div class="week-chevron">›</div>
+      `;
+      const daysDiv = document.createElement('div');
+      daysDiv.className = 'days-table';
+      week.days.forEach((day, i) => {
+        const key = getDayKey(phase.phase, week.num, i);
+        const done = state.checkedDays[key];
+        const color = subjectColor(day.mat);
+        const row = document.createElement('div');
+        row.className = 'day-row';
+        row.innerHTML = `
+          <div class="day-row-day">Dia ${i+1}</div>
+          <div class="day-row-content">
+            <div class="day-row-subj" style="color:${color}">${day.mat}</div>
+            <div class="day-row-topic">${day.topic}</div>
+            ${day.tip ? `<div class="day-row-tip">💡 ${day.tip}</div>` : ''}
+          </div>
+          <div class="day-row-diff ${diffClass(day.diff)}">${day.diff !== '—' ? day.diff : ''}</div>
+          <div class="day-row-check ${done?'done':''}" onclick="toggleScheduleDay('${key}',this,event)">${done?'✓':''}</div>
+        `;
+        daysDiv.appendChild(row);
+      });
+      wHead.onclick = () => { wHead.classList.toggle('open'); daysDiv.classList.toggle('open'); };
+      weeksDiv.appendChild(wHead);
+      weeksDiv.appendChild(daysDiv);
+    });
+    phDiv.appendChild(phHead);
+    phDiv.appendChild(weeksDiv);
+    el.appendChild(phDiv);
+  });
+}
+
+function toggleScheduleDay(key, el, e) {
+  e.stopPropagation();
+  const was = state.checkedDays[key];
+  state.checkedDays[key] = !was;
+  el.classList.toggle('done');
+  el.textContent = !was ? '✓' : '';
+  saveState();
+  if (!was) showNotif('🎉 Dia concluído no plano!');
+}
+
+function renderMap() {
+  const subs = Object.keys(TOPICS);
+  const tabsEl = document.getElementById('map-tabs');
+  const contentsEl = document.getElementById('map-contents');
+  if (tabsEl.innerHTML !== '') return; 
+
+  tabsEl.innerHTML = ''; contentsEl.innerHTML = '';
+
+  subs.forEach((sub, si) => {
+    const tab = document.createElement('button');
+    tab.className = 'map-tab' + (si === 0 ? ' active' : '');
+    tab.textContent = sub;
+    tab.onclick = () => {
+      document.querySelectorAll('.map-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.map-content').forEach(c => c.classList.remove('active'));
+      document.getElementById('map-content-' + si).classList.add('active');
+    };
+    tabsEl.appendChild(tab);
+
+    const cont = document.createElement('div');
+    cont.className = 'map-content' + (si === 0 ? ' active' : '');
+    cont.id = 'map-content-' + si;
+
+    TOPICS[sub].forEach((t, i) => {
+      const key = getTopicKey(sub, i);
+      const status = state.topicStatus[key] || '';
+      const row = document.createElement('div');
+      row.className = 'topic-row';
+      row.innerHTML = `
+        <div class="topic-priority ${priorityClass(t.priority)}">${priorityLabel(t.priority)}</div>
+        <div class="topic-name">${t.name}</div>
+        <div class="topic-diff ${diffClass(t.diff)}">${t.diff}</div>
+        <div class="topic-status ${status}" onclick="cycleTopicStatus('${key}',this)" title="Clique para mudar domínio">
+          ${status === 'green' ? '✓' : status === 'yellow' ? '!' : status === 'red' ? '✕' : ''}
+        </div>
+      `;
+      cont.appendChild(row);
+    });
+    contentsEl.appendChild(cont);
+  });
+}
+
+function cycleTopicStatus(key, el) {
+  const current = state.topicStatus[key] || '';
+  const next = current === '' ? 'green' : current === 'green' ? 'yellow' : current === 'yellow' ? 'red' : '';
+  state.topicStatus[key] = next;
+  el.className = 'topic-status ' + next;
+  el.textContent = next === 'green' ? '✓' : next === 'yellow' ? '!' : next === 'red' ? '✕' : '';
+  saveState();
+  if(next === 'green') showNotif('✨ Perfeito! Domínio marcado.');
+}
+
+function renderSimulados() {
+  const grid = document.getElementById('sim-grid');
+  grid.innerHTML = '';
+
+  SIMULADOS_LIST.forEach(sim => {
+    const saved = state.simulados[sim.num];
+    const total = saved ? ((saved.port||0)+(saved.mat||0)+(saved.cien||0)+(saved.hum||0)) : 0;
+    const pct = saved ? Math.round(total/50*100) : 0;
+
+    const card = document.createElement('div');
+    card.className = 'sim-card';
+    card.onclick = () => openSimModal(sim.num);
+
+    let scoreHtml = '';
+    if (saved) {
+      scoreHtml = `<div class="sim-card-score" style="color:${pct>=70?'var(--green)':pct>=50?'var(--orange)':'var(--red)'}">${total}<span style="font-size:16px;color:var(--text3)">/50</span></div>
+      <div style="font-size:12px;color:var(--text3);margin-top:2px;font-weight:700">Port: ${saved.port||0} · Mat: ${saved.mat||0} · Ciên: ${saved.cien||0} · Hum: ${saved.hum||0}</div>
+      <div class="sim-card-bar"><div class="sim-card-bar-fill" style="background:${pct>=70?'var(--green)':pct>=50?'var(--orange)':'var(--red)'};width:${pct}%"></div></div>
+      <span class="sim-card-status done">${pct}% de acertos</span>`;
+    } else {
+      scoreHtml = `<div style="font-size:14px;color:var(--text3);margin-bottom:8px;font-weight:600">Não realizado</div>
+      <span class="sim-card-status pending">Pendente</span>`;
+    }
+
+    card.innerHTML = `
+      <div class="sim-card-num">${String(sim.num).padStart(2,'0')}</div>
+      <div class="sim-card-week">Semana ${sim.week} · ${sim.focus}</div>
+      ${scoreHtml}
+    `;
+    grid.appendChild(card);
+  });
+  renderSimChart();
+}
+
+function renderSimChart() {
+  const canvas = document.getElementById('progress-chart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth || 600;
+  const H = 120;
+  canvas.width = W; canvas.height = H;
+  ctx.clearRect(0, 0, W, H);
+
+  const pts = SIMULADOS_LIST.map(s => {
+    const saved = state.simulados[s.num];
+    if (!saved) return null;
+    return (((saved.port||0)+(saved.mat||0)+(saved.cien||0)+(saved.hum||0))/50)*100;
+  });
+
+  const valid = pts.filter(p=>p!==null);
+  if (valid.length < 2) {
+    ctx.fillStyle = 'rgba(99,102,241,0.1)';
+    ctx.fillRect(0, H/2-1, W, 2);
+    ctx.fillStyle = '#64748b';
+    ctx.font = '600 13px Nunito,sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('Realize ao menos 2 simulados para ver o gráfico de evolução', W/2, H/2+5);
+    return;
+  }
+
+  [40,60,80].forEach(v => {
+    const y = H - (v/100)*H;
+    ctx.strokeStyle = 'rgba(15,23,42,0.05)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke();
+    ctx.fillStyle = '#94a3b8';
+    ctx.font = '700 11px Nunito,sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText(v+'%', 2, y-4);
+  });
+
+  const validPts = [];
+  const step = W / (valid.length > 1 ? valid.length - 1 : 1);
+  valid.forEach((p,i) => { validPts.push({x: i*step, y: H - (p/100)*H}); });
+
+  ctx.beginPath();
+  ctx.moveTo(validPts[0].x, H);
+  validPts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.lineTo(validPts[validPts.length-1].x, H);
+  ctx.closePath();
+  const grad = ctx.createLinearGradient(0,0,0,H);
+  grad.addColorStop(0,'rgba(99,102,241,0.25)');
+  grad.addColorStop(1,'rgba(99,102,241,0.01)');
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  ctx.beginPath();
+  validPts.forEach((p,i) => i===0 ? ctx.moveTo(p.x,p.y) : ctx.lineTo(p.x,p.y));
+  ctx.strokeStyle = '#6366f1';
+  ctx.lineWidth = 3;
+  ctx.stroke();
+
+  validPts.forEach(p => {
+    ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2);
+    ctx.fillStyle = '#6366f1'; ctx.fill();
+    ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
+  });
+}
+
+function openSimModal(num) {
+  state.currentSimModal = num;
+  const sim = SIMULADOS_LIST.find(s => s.num === num) || {week:'?', focus:'Simulado Extra'};
+  document.getElementById('modal-sim-title').textContent = `Simulado ${num}`;
+  document.getElementById('modal-sim-sub').textContent = `Semana ${sim.week} · ${sim.focus}`;
+  const saved = state.simulados[num] || {};
+  document.getElementById('inp-port').value = saved.port || '';
+  document.getElementById('inp-mat').value = saved.mat || '';
+  document.getElementById('inp-cien').value = saved.cien || '';
+  document.getElementById('inp-hum').value = saved.hum || '';
+  document.getElementById('inp-obs').value = saved.obs || '';
+  updateModalTotal();
+  document.getElementById('sim-modal').classList.add('open');
+
+  ['inp-port','inp-mat','inp-cien','inp-hum'].forEach(id => {
+    document.getElementById(id).oninput = updateModalTotal;
+  });
+}
+
+function updateModalTotal() {
+  const p = parseInt(document.getElementById('inp-port').value)||0;
+  const m = parseInt(document.getElementById('inp-mat').value)||0;
+  const c = parseInt(document.getElementById('inp-cien').value)||0;
+  const h = parseInt(document.getElementById('inp-hum').value)||0;
+  const t = p+m+c+h;
+  const pct = Math.round(t/50*100);
+  document.getElementById('modal-total-preview').textContent = `Total: ${t} / 50 (${pct}%)`;
+  document.getElementById('modal-total-preview').style.color = pct>=70?'var(--green)':pct>=50?'var(--orange)':'var(--red)';
+}
+
+function saveSimulado() {
+  const num = state.currentSimModal;
+  state.simulados[num] = {
+    port: parseInt(document.getElementById('inp-port').value)||0,
+    mat: parseInt(document.getElementById('inp-mat').value)||0,
+    cien: parseInt(document.getElementById('inp-cien').value)||0,
+    hum: parseInt(document.getElementById('inp-hum').value)||0,
+    obs: document.getElementById('inp-obs').value,
+    date: new Date().toLocaleDateString('pt-BR')
+  };
+  saveState();
+  closeSimModal();
+  renderSimulados();
+  
+  showNotif(`🎯 Simulado ${num} Salvo!`, `<button class="toast-btn" onclick="navigate('erros')">Anotar Erros</button>`);
+  
+  if (getLastScore()) {
+    document.getElementById('stat-sims').textContent = getSimsDone();
+    document.getElementById('bar-sims').style.width = (getSimsDone()/19*100) + '%';
+  }
+}
+
+function closeSimModal() {
+  document.getElementById('sim-modal').classList.remove('open');
+}
+
+function addError() {
+  const subject = document.getElementById('err-subject').value;
+  const topic = document.getElementById('err-topic').value.trim();
+  const type = document.getElementById('err-type').value;
+  const desc = document.getElementById('err-desc').value.trim();
+  if (!subject || !topic) { showNotif('Preencha matéria e tópico!'); return; }
+
+  state.errors.unshift({ subject, topic, type, desc, date: new Date().toLocaleDateString('pt-BR') });
+  saveState();
+  document.getElementById('err-subject').value = '';
+  document.getElementById('err-topic').value = '';
+  document.getElementById('err-type').value = '';
+  document.getElementById('err-desc').value = '';
+  renderErrors();
+  showNotif('✍️ Erro adicionado ao caderno!');
+}
+
+function renderErrors() {
+  const filter = document.getElementById('err-filter').value;
+  const list = document.getElementById('errors-list');
+  const filtered = filter ? state.errors.filter(e => e.subject === filter) : state.errors;
+  document.getElementById('err-count').textContent = state.errors.length + ' erro' + (state.errors.length !== 1 ? 's' : '') + ' registrado' + (state.errors.length !== 1 ? 's' : '');
+  document.getElementById('badge-erros').textContent = state.errors.length;
+
+  if (!filtered.length) {
+    list.innerHTML = `<div style="text-align:center; padding: 40px 20px; color:var(--text3); font-weight:600">${filter ? 'Nenhum erro em ' + filter : 'Você ainda não anotou erros. 🚀<br>Use este caderno sempre que errar uma questão.'}</div>`;
+    return;
+  }
+
+  list.innerHTML = '';
+  filtered.forEach((err, i) => {
+    const idx = state.errors.indexOf(err);
+    const color = subjectColor(err.subject);
+    const div = document.createElement('div');
+    div.className = 'error-item';
+    div.innerHTML = `
+      <div class="error-badge" style="background:${color}22;color:${color};border:1px solid ${color}44">${err.subject}</div>
+      <div class="error-content">
+        <div class="error-topic">${err.topic}</div>
+        ${err.type ? `<div style="font-size:12px;color:var(--text3);font-weight:700;margin-bottom:6px">${err.type}</div>` : ''}
+        ${err.desc ? `<div class="error-reason">${err.desc}</div>` : ''}
+        <div class="error-date">${err.date}</div>
+      </div>
+      <button class="error-del" onclick="deleteError(${idx})" title="Remover">✕</button>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function deleteError(idx) {
+  state.errors.splice(idx, 1);
+  saveState();
+  renderErrors();
+  showNotif('🗑️ Erro removido.');
+}
+
+// ========== TIMER ==========
+let timerInterval = null;
+let timerSec = 25 * 60;
+let timerRunning = false;
+let timerMode = 'pomodoro';
+const timerModes = {pomodoro: 25*60, '50': 50*60, prova: 240*60, livre: 0};
+let sessionStart = null;
+let sessionsToday = 0;
+let totalMinutes = 0;
+let timerHistory = [];
+
+function renderTimer() {
+  updateTimerDisplay();
+  document.getElementById('sessions-today').textContent = sessionsToday;
+  document.getElementById('total-time').textContent = totalMinutes + 'min';
+  renderTimerHistory();
+}
+
+function setTimerMode(mode, el) {
+  timerMode = mode;
+  document.querySelectorAll('.timer-mode').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  if (timerRunning) { clearInterval(timerInterval); timerRunning = false; }
+  timerSec = mode === 'livre' ? 0 : timerModes[mode];
+  document.getElementById('btn-start').style.display = 'inline-flex';
+  document.getElementById('btn-pause').style.display = 'none';
+  updateTimerDisplay();
+}
+
+function timerAction(action) {
+  if (action === 'start') {
+    if (timerMode === 'livre') timerSec = 0;
+    timerRunning = true;
+    sessionStart = Date.now();
+    document.getElementById('btn-start').style.display = 'none';
+    document.getElementById('btn-pause').style.display = 'inline-flex';
+    timerInterval = setInterval(() => {
+      if (timerMode === 'livre') {
+        timerSec++;
+      } else {
+        timerSec--;
+        if (timerSec <= 0) {
+          timerSec = 0;
+          clearInterval(timerInterval);
+          timerRunning = false;
+          document.getElementById('btn-start').style.display = 'inline-flex';
+          document.getElementById('btn-pause').style.display = 'none';
+          completeSession();
+        }
+      }
+      updateTimerDisplay();
+    }, 1000);
+  } else if (action === 'pause') {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('btn-start').style.display = 'inline-flex';
+    document.getElementById('btn-pause').style.display = 'none';
+    completeSession();
+  } else if (action === 'reset') {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    timerSec = timerMode === 'livre' ? 0 : timerModes[timerMode];
+    document.getElementById('btn-start').style.display = 'inline-flex';
+    document.getElementById('btn-pause').style.display = 'none';
+    updateTimerDisplay();
+  }
+}
+
+function completeSession() {
+  if (!sessionStart) return;
+  const elapsed = Math.floor((Date.now() - sessionStart) / 60000);
+  if (elapsed < 1) { sessionStart = null; return; }
+  const sub = document.getElementById('timer-subject').value || 'Estudo geral';
+  sessionsToday++;
+  totalMinutes += elapsed;
+  timerHistory.unshift({ sub, elapsed, time: new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'}) });
+  document.getElementById('sessions-today').textContent = sessionsToday;
+  document.getElementById('total-time').textContent = totalMinutes + 'min';
+  renderTimerHistory();
+  sessionStart = null;
+  showNotif(`⏱️ Sessão de ${elapsed}min registrada!`);
+}
+
+function updateTimerDisplay() {
+  const sec = Math.abs(timerSec);
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  if (h > 0) {
+    document.getElementById('timer-display').textContent = `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  } else {
+    document.getElementById('timer-display').textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  }
+  const pct = timerMode !== 'livre' && timerModes[timerMode] > 0 ? (1 - timerSec/timerModes[timerMode]) * 100 : 0;
+  const col = pct > 80 ? 'var(--red)' : pct > 50 ? 'var(--orange)' : 'var(--accent)';
+  document.getElementById('timer-display').style.color = timerRunning ? col : 'var(--text)';
+}
+
+function renderTimerHistory() {
+  const el = document.getElementById('timer-history');
+  if (!timerHistory.length) { el.innerHTML = '<div style="font-size:13px;color:var(--text3);font-weight:600">Nenhuma sessão finalizada hoje.</div>'; return; }
+  el.innerHTML = timerHistory.map(h => {
+    const color = subjectColor(h.sub);
+    return `<div style="display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div style="width:10px;height:10px;border-radius:50%;background:${color};flex-shrink:0"></div>
+      <div style="flex:1;font-size:14px;font-weight:700;color:var(--text)">${h.sub}</div>
+      <div style="font-size:13px;font-weight:800;color:var(--accent)">${h.elapsed}min</div>
+      <div style="font-size:12px;font-weight:600;color:var(--text3)">${h.time}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderFormulas() {
+  const subs = Object.keys(FORMULAS);
+  const tabsEl = document.getElementById('formula-tabs');
+  const contEl = document.getElementById('formula-contents');
+  if (tabsEl.innerHTML !== '') return;
+
+  tabsEl.innerHTML = ''; contEl.innerHTML = '';
+
+  subs.forEach((sub, si) => {
+    const tab = document.createElement('button');
+    tab.className = 'map-tab' + (si === 0 ? ' active' : '');
+    tab.textContent = sub;
+    tab.onclick = () => {
+      document.querySelectorAll('#formula-tabs .map-tab').forEach(t=>t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.formula-content').forEach(c=>c.style.display='none');
+      document.getElementById('fcon-'+si).style.display = 'grid';
+    };
+    tabsEl.appendChild(tab);
+
+    const cont = document.createElement('div');
+    cont.className = 'formula-content formulas-grid';
+    cont.id = 'fcon-' + si;
+    cont.style.display = si === 0 ? 'grid' : 'none';
+
+    FORMULAS[sub].forEach(f => {
+      const card = document.createElement('div');
+      card.className = 'formula-card';
+      card.innerHTML = `
+        <div class="formula-label">${f.label}</div>
+        <div class="formula-eq" style="background:var(--bg3); border:1px solid var(--border2); color:var(--text); font-weight:700">${f.eq}</div>
+        ${f.desc ? `<div class="formula-desc">${f.desc}</div>` : ''}
+      `;
+      cont.appendChild(card);
+    });
+    contEl.appendChild(cont);
+  });
+}
+
+function renderResources() {
+  const grid = document.getElementById('resources-grid');
+  if (grid.innerHTML !== '') return;
+  RESOURCES.forEach(r => {
+    const a = document.createElement('a');
+    a.className = 'resource-card';
+    a.href = r.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.innerHTML = `
+      <div class="resource-icon">${r.icon}</div>
+      <div class="resource-name">${r.name}</div>
+      <div class="resource-desc">${r.desc}</div>
+      <span class="resource-tag" style="background:${r.tagColor};color:${r.tagTextColor}">${r.tag}</span>
+    `;
+    grid.appendChild(a);
+  });
+}
+
+function renderStrategy() {
+  const el = document.getElementById('strategy-content');
+  if (el.innerHTML !== '') return;
+  STRATEGY.forEach(section => {
+    const div = document.createElement('div');
+    div.className = 'card';
+    div.style.marginBottom = '20px';
+    div.innerHTML = `
+      <div class="card-title"><span style="color:var(--accent);margin-right:8px;font-size:22px">${section.icon}</span>${section.title}</div>
+      ${section.items.map(item => `
+        <div style="display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);align-items:flex-start">
+          <div style="width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;margin-top:6px"></div>
+          <div style="font-size:15px;color:var(--text);line-height:1.55;font-weight:600">${item}</div>
+        </div>
+      `).join('')}
+    `;
+    el.appendChild(div);
+  });
+
+  const armadilhas = [
+    ['Ler o texto sem ler a pergunta primeiro','Leia a PERGUNTA antes do texto.'],
+    ['Escolher a primeira alternativa que parece correta','Leia TODAS as alternativas antes de marcar.'],
+    ['Deixar questão em branco','NUNCA. Na ETEC não há desconto por erro.'],
+    ['Mudar a resposta sem motivo','Sua primeira intuição geralmente é mais confiável.'],
+    ['Gastar tempo demais em uma questão','Marque e avance. Volte se sobrar tempo.'],
+    ['Confundir o que foi perguntado','Sublinhe as palavras-chave: qual, exceto, incorreta.']
+  ];
+
+  const trapBox = document.createElement('div');
+  trapBox.className = 'card strategy-traps';
+  trapBox.innerHTML = `
+    <div class="card-title"><span style="color:var(--orange);margin-right:8px;font-size:22px">⚠</span>Erros comuns e Como Agir</div>
+    <table>
+      <thead><tr><th>Situação / Armadilha</th><th>Como agir</th></tr></thead>
+      <tbody>
+        ${armadilhas.map(([a,b]) => `<tr><td>${a}</td><td><strong>${b}</strong></td></tr>`).join('')}
+      </tbody>
+    </table>
+  `;
+  el.appendChild(trapBox);
+}
+
+function showNotif(msg, actionHtml = '') {
+  const el = document.getElementById('notif');
+  el.innerHTML = `<span>${msg}</span> ${actionHtml}`;
+  el.classList.add('show');
+  clearTimeout(notifTimeout);
+  notifTimeout = setTimeout(() => el.classList.remove('show'), actionHtml ? 4500 : 3000);
+}
+
+// ========== INIT ==========
+window.addEventListener('DOMContentLoaded', () => {
+  renderDashboard();
+});
+</script>
+</body>
+</html>
