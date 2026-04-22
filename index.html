@@ -454,6 +454,51 @@
   .resource-desc { font-size: 14px; color: var(--text2); line-height: 1.6; font-weight: 600; }
   .resource-tag { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 20px; margin-top: 16px; display: inline-block; }
   
+
+  .logo-home {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    padding: 0;
+    color: inherit;
+  }
+  .topbar-controls { display:flex; align-items:center; gap:10px; }
+  .btn-icon { width:40px; height:40px; padding:0; font-size:18px; }
+  .btn[disabled] { opacity:.5; cursor:not-allowed; }
+
+  .stat-card.clickable { cursor:pointer; }
+  .stat-card.clickable:hover { border-color: var(--accent-border); }
+
+  .formula-content.formulas-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; }
+  .formula-card { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px; box-shadow: var(--shadow); }
+  .formula-label { font-size: 13px; font-weight: 800; color: var(--text3); text-transform: uppercase; margin-bottom: 10px; }
+  .formula-eq { border-radius: 10px; padding: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; margin-bottom: 8px; }
+  .formula-desc { font-size: 13px; color: var(--text2); font-weight: 600; }
+
+  .diff-easy { color: var(--green); }
+  .diff-easymed, .diff-med { color: var(--yellow); }
+  .diff-medhi, .diff-hard { color: var(--red); }
+
+  .overview-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap:16px; }
+  .overview-card { background: var(--bg2); border:1px solid var(--border); border-radius: var(--radius); padding:20px; box-shadow: var(--shadow); }
+  .overview-big { font-size: 34px; font-weight: 800; }
+  .progress-list { margin-top: 16px; display:grid; gap:10px; }
+  .progress-item { display:flex; justify-content:space-between; font-weight:700; color:var(--text2); }
+
+  .auth-overlay { position: fixed; inset:0; background: rgba(15,23,42,.6); z-index: 300; display:none; align-items:center; justify-content:center; padding:20px; }
+  .auth-overlay.open { display:flex; }
+  .auth-card { max-width: 440px; width:100%; background:var(--bg2); border:1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow-hover); }
+  .auth-row { margin-bottom: 14px; }
+
+
+  .inline-back { margin-bottom: 14px; }
+  .inline-back .btn { padding: 8px 12px; font-size: 13px; }
+  .kpi-actions { margin-top: 10px; display:flex; gap:8px; flex-wrap:wrap; }
+  .kpi-actions .btn { padding: 8px 12px; font-size: 13px; }
+  .auth-divider { margin: 16px 0; border-top: 1px solid var(--border); }
+
   .section-title { font-size: 30px; font-weight: 800; color: var(--text); margin-bottom: 8px; font-family: var(--font-serif); }
   .section-sub { font-size: 16px; color: var(--text2); margin-bottom: 32px; font-weight: 600; }
 
@@ -494,6 +539,14 @@
     .stats-grid { grid-template-columns: 1fr 1fr; }
     .score-inputs, .error-form-grid { grid-template-columns: 1fr; }
     .timer-display { font-size: 64px; }
+    .topbar-right .btn-ghost:not(#btn-back) { display:none; }
+  }
+
+  @media (max-width: 520px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .welcome-title { font-size: 28px; }
+    .modal > div[style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+    .topbar-controls .btn-label { display:none; }
   }
 </style>
 </head>
@@ -502,8 +555,10 @@
 <div id="app">
   <aside id="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-mark">📚 ETEC Study</div>
-      <div class="logo-sub">Seu Guia Estratégico</div>
+      <button class="logo-home" onclick="navigate('dashboard')" aria-label="Ir para início">
+        <div class="logo-mark">📚 ETEC Study</div>
+        <div class="logo-sub">Seu Guia Estratégico</div>
+      </button>
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section-title">Principal</div>
@@ -516,6 +571,11 @@
       <div class="nav-item" onclick="navigate('erros')"><span class="nav-icon">📓</span> Caderno de Erros <span class="nav-badge" id="badge-erros">0</span></div>
       <div class="nav-item" onclick="navigate('timer')"><span class="nav-icon">⏱️</span> Foco & Timer</div>
       <div class="nav-item" onclick="navigate('formulas')"><span class="nav-icon">📐</span> Fórmulas Rápidas</div>
+
+      <div class="nav-section-title">Acompanhamento</div>
+      <div class="nav-item" onclick="navigate('progresso')"><span class="nav-icon">📊</span> Progresso do Guia</div>
+      <div class="nav-item" onclick="navigate('simulados-resumo')"><span class="nav-icon">📈</span> Resumo de Simulados</div>
+      <div class="nav-item" onclick="navigate('erros-resumo')"><span class="nav-icon">🧾</span> Resumo de Erros</div>
       
       <div class="nav-section-title">Extra</div>
       <div class="nav-item" onclick="navigate('recursos')"><span class="nav-icon">🎁</span> Links Gratuitos</div>
@@ -534,7 +594,11 @@
         <span class="page-title" id="page-title">Dashboard</span>
       </div>
       <div class="topbar-right">
-        <button class="btn btn-ghost" onclick="navigate('simulados')">🎯 Lançar Nota</button>
+        <div class="topbar-controls">
+          <button class="btn btn-ghost btn-icon" id="btn-back" onclick="goBack()" title="Voltar">←</button>
+          <button class="btn btn-ghost" onclick="navigate('simulados')">🎯 <span class="btn-label">Lançar Nota</span></button>
+          <button class="btn btn-ghost" onclick="openAuthModal()">👤 <span class="btn-label" id="auth-btn-label">Entrar</span></button>
+        </div>
       </div>
     </header>
 
@@ -566,30 +630,30 @@
         </div>
 
         <div class="stats-grid">
-          <div class="stat-card">
+          <button class="stat-card clickable" onclick="navigate('progresso')">
             <div class="stat-label">Dias Concluídos</div>
             <div class="stat-value" id="stat-days">0</div>
             <div class="stat-unit">de 174 dias no guia</div>
             <div class="stat-bar"><div class="stat-bar-fill" id="bar-days" style="background:var(--accent);width:0%"></div></div>
-          </div>
-          <div class="stat-card">
+          </button>
+          <button class="stat-card clickable" onclick="navigate('simulados-resumo')">
             <div class="stat-label">Simulados Feitos</div>
             <div class="stat-value" id="stat-sims">0</div>
             <div class="stat-unit">de 19 sugeridos</div>
             <div class="stat-bar"><div class="stat-bar-fill" id="bar-sims" style="background:var(--green);width:0%"></div></div>
-          </div>
-          <div class="stat-card">
+          </button>
+          <button class="stat-card clickable" onclick="navigate('simulados-resumo')">
             <div class="stat-label">Última Nota</div>
             <div class="stat-value" id="stat-score">–</div>
             <div class="stat-unit" id="stat-score-sub">Nenhum simulado feito</div>
             <div class="stat-bar"><div class="stat-bar-fill" id="bar-score" style="background:var(--yellow);width:0%"></div></div>
-          </div>
-          <div class="stat-card">
+          </button>
+          <button class="stat-card clickable" onclick="navigate('erros-resumo')">
             <div class="stat-label">Caderno de Erros</div>
             <div class="stat-value" id="stat-errors">0</div>
             <div class="stat-unit">Anotações registradas</div>
             <div class="stat-bar"><div class="stat-bar-fill" id="bar-errors" style="background:var(--orange);width:0%"></div></div>
-          </div>
+          </button>
         </div>
 
         <div class="grid-2">
@@ -718,7 +782,26 @@
         </div>
       </div>
 
-      <div id="view-formulas" class="view">
+      
+      <div id="view-progresso" class="view">
+        <div class="section-title">Progresso do Guia 📊</div>
+        <div class="section-sub">Visão detalhada dos 174 dias e avanço por fase.</div>
+        <div class="overview-grid" id="progress-overview"></div>
+      </div>
+
+      <div id="view-simulados-resumo" class="view">
+        <div class="section-title">Resumo de Simulados 📈</div>
+        <div class="section-sub">Acompanhe seu desempenho geral e consistência.</div>
+        <div class="overview-grid" id="sim-overview"></div>
+      </div>
+
+      <div id="view-erros-resumo" class="view">
+        <div class="section-title">Resumo de Erros 🧾</div>
+        <div class="section-sub">Quais matérias concentram seus erros e onde priorizar revisão.</div>
+        <div class="overview-grid" id="errors-overview"></div>
+      </div>
+
+<div id="view-formulas" class="view">
         <div class="section-title">Fórmulas Salva-Vidas 📐</div>
         <div class="section-sub">Aquele resumo rápido essencial para as matérias de exatas e datas.</div>
         <div class="map-tabs" id="formula-tabs" style="margin-bottom:24px"></div>
@@ -767,8 +850,29 @@
   </div>
 </div>
 
+<div class="auth-overlay" id="auth-modal">
+  <div class="auth-card">
+    <div class="modal-title" style="font-size:26px">Sua Conta de Estudo</div>
+    <div class="modal-sub">Use um identificador para separar perfis no mesmo aparelho. Para usar em outro aparelho, exporte/importe seu backup.</div>
+    <div class="auth-row"><div class="input-label">Nome</div><input id="auth-name" class="score-input" placeholder="Ex: Maria"></div>
+    <div class="auth-row"><div class="input-label">ID da conta</div><input id="auth-id" class="score-input" placeholder="Ex: maria_etec"></div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px">
+      <button class="btn btn-primary" onclick="loginAccount()">Entrar/Salvar</button>
+      <button class="btn btn-ghost" onclick="logoutAccount()">Sair da Conta</button>
+      <button class="btn btn-ghost" onclick="exportBackup()">Exportar Backup</button>
+      <button class="btn btn-ghost" onclick="importBackup()">Importar Backup</button>
+      <button class="btn btn-ghost" onclick="closeAuthModal()">Fechar</button>
+    </div>
+    <div class="auth-divider"></div>
+    <div class="input-label" style="margin-bottom:6px">Login Google (opcional)</div>
+    <div id="google-login-slot" style="min-height:42px;display:flex;align-items:center"></div>
+    <div style="font-size:12px;color:var(--text3);font-weight:700;margin-top:8px">Para ativar: configure seu Client ID Google em <code>GOOGLE_CLIENT_ID</code>.</div>
+  </div>
+</div>
+
 <div class="notif" id="notif"></div>
 
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 <script>
 // ========== DATA INTEGRAL MANTIDA ==========
 const SCHEDULE = [
@@ -1220,46 +1324,80 @@ const STRATEGY = [
 ];
 
 // ========== STATE ==========
+const ACCOUNT_PREFIX = 'etec_account_';
+const GOOGLE_CLIENT_ID = localStorage.getItem('etec_google_client_id') || '';
+const currentAccount = () => localStorage.getItem('etec_account_id') || 'default';
+const accountKey = (suffix) => `${ACCOUNT_PREFIX}${currentAccount()}_${suffix}`;
+
+let navHistory = [];
+let notifTimeout = null;
+
 let state = {
   currentView: 'dashboard',
   currentWeek: 1,
-  checkedDays: JSON.parse(localStorage.getItem('etec_checked') || '{}'),
-  simulados: JSON.parse(localStorage.getItem('etec_sims') || '{}'),
-  errors: JSON.parse(localStorage.getItem('etec_errors') || '[]'),
-  topicStatus: JSON.parse(localStorage.getItem('etec_topics') || '{}'),
-  timerSessions: JSON.parse(localStorage.getItem('etec_timer_sessions') || '[]'),
+  checkedDays: {},
+  simulados: {},
+  errors: [],
+  topicStatus: {},
+  timerSessions: [],
   currentSimModal: null,
-  timerInterval: null,
-  timerSeconds: 25 * 60,
-  timerRunning: false,
-  timerMode: 'pomodoro',
-  timerModeSeconds: {'pomodoro':25*60,'50':50*60,'prova':240*60,'livre':0},
-  sessionsToday: 0,
-  totalMinutesToday: 0,
-  startTime: null,
-  studentName: localStorage.getItem('etec_name') || ''
+  studentName: ''
 };
 
-function saveState() {
-  localStorage.setItem('etec_checked', JSON.stringify(state.checkedDays));
-  localStorage.setItem('etec_sims', JSON.stringify(state.simulados));
-  localStorage.setItem('etec_errors', JSON.stringify(state.errors));
-  localStorage.setItem('etec_topics', JSON.stringify(state.topicStatus));
-  localStorage.setItem('etec_timer_sessions', JSON.stringify(state.timerSessions));
+function loadState() {
+  state.checkedDays = JSON.parse(localStorage.getItem(accountKey('checked')) || '{}');
+  state.simulados = JSON.parse(localStorage.getItem(accountKey('sims')) || '{}');
+  state.errors = JSON.parse(localStorage.getItem(accountKey('errors')) || '[]');
+  state.topicStatus = JSON.parse(localStorage.getItem(accountKey('topics')) || '{}');
+  state.timerSessions = JSON.parse(localStorage.getItem(accountKey('timer_sessions')) || '[]');
+  state.studentName = localStorage.getItem(accountKey('name')) || '';
 }
 
-const PAGE_TITLES = {dashboard:'Painel de Hoje',schedule:'Cronograma',map:'Mapa de Matérias',simulados:'Meus Simulados',erros:'Caderno de Erros',timer:'Modo Foco',formulas:'Fórmulas Rápidas',recursos:'Materiais Gratuitos',estrategia:'Como fazer a prova'};
+function saveState() {
+  localStorage.setItem(accountKey('checked'), JSON.stringify(state.checkedDays));
+  localStorage.setItem(accountKey('sims'), JSON.stringify(state.simulados));
+  localStorage.setItem(accountKey('errors'), JSON.stringify(state.errors));
+  localStorage.setItem(accountKey('topics'), JSON.stringify(state.topicStatus));
+  localStorage.setItem(accountKey('timer_sessions'), JSON.stringify(state.timerSessions));
+  localStorage.setItem(accountKey('name'), state.studentName || '');
+}
 
-function navigate(view) {
+const PAGE_TITLES = {
+  dashboard:'Painel de Hoje',schedule:'Cronograma',map:'Mapa de Matérias',simulados:'Meus Simulados',
+  erros:'Caderno de Erros',timer:'Modo Foco',formulas:'Fórmulas Rápidas',recursos:'Materiais Gratuitos',
+  estrategia:'Como fazer a prova',progresso:'Progresso', 'simulados-resumo':'Resumo de Simulados', 'erros-resumo':'Resumo de Erros'
+};
+
+function updateBackButton() {
+  const btn = document.getElementById('btn-back');
+  if (btn) btn.disabled = navHistory.length === 0;
+}
+
+
+function ensureInlineBackButtons() {
+  document.querySelectorAll('.view').forEach(v => {
+    if (v.id === 'view-dashboard') return;
+    if (v.querySelector('.inline-back')) return;
+    const wrap = document.createElement('div');
+    wrap.className = 'inline-back';
+    wrap.innerHTML = `<button class="btn btn-ghost" onclick="goBack()">← Voltar</button>`;
+    v.prepend(wrap);
+  });
+}
+
+function navigate(view, recordHistory = true) {
+  if (recordHistory && state.currentView && state.currentView !== view) navHistory.push(state.currentView);
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  document.getElementById('view-' + view).classList.add('active');
+  const target = document.getElementById('view-' + view);
+  if (!target) return;
+  target.classList.add('active');
   document.querySelectorAll('.nav-item').forEach(n => {
     if (n.getAttribute('onclick') && n.getAttribute('onclick').includes("'" + view + "'")) n.classList.add('active');
   });
   document.getElementById('page-title').textContent = PAGE_TITLES[view] || view;
   state.currentView = view;
-  
+
   if (view === 'dashboard') renderDashboard();
   if (view === 'schedule') renderSchedule();
   if (view === 'map') renderMap();
@@ -1269,9 +1407,19 @@ function navigate(view) {
   if (view === 'formulas') renderFormulas();
   if (view === 'recursos') renderResources();
   if (view === 'estrategia') renderStrategy();
-  
+  if (view === 'progresso') renderProgressOverview();
+  if (view === 'simulados-resumo') renderSimuladosOverview();
+  if (view === 'erros-resumo') renderErrorsOverview();
+
   closeSidebar();
+  updateBackButton();
   window.scrollTo(0,0);
+}
+
+function goBack() {
+  const prev = navHistory.pop();
+  if (!prev) return;
+  navigate(prev, false);
 }
 
 function toggleSidebar() {
@@ -1281,6 +1429,99 @@ function toggleSidebar() {
 function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('open');
+}
+
+function openAuthModal() {
+  document.getElementById('auth-name').value = state.studentName || '';
+  document.getElementById('auth-id').value = currentAccount() === 'default' ? '' : currentAccount();
+  document.getElementById('auth-modal').classList.add('open');
+  initGoogleLogin();
+}
+function closeAuthModal() { document.getElementById('auth-modal').classList.remove('open'); }
+
+function logoutAccount() {
+  localStorage.setItem('etec_account_id', 'default');
+  loadState();
+  document.getElementById('auth-btn-label').textContent = state.studentName || 'Entrar';
+  closeAuthModal();
+  renderDashboard();
+  showNotif('👋 Conta desconectada deste dispositivo.');
+}
+
+function initGoogleLogin() {
+  const slot = document.getElementById('google-login-slot');
+  if (!slot) return;
+  slot.innerHTML = '';
+  if (!GOOGLE_CLIENT_ID || !window.google?.accounts?.id) {
+    slot.innerHTML = '<span style="font-size:12px;color:var(--text3);font-weight:700">Google indisponível (Client ID não configurado).</span>';
+    return;
+  }
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: handleGoogleCredential
+  });
+  google.accounts.id.renderButton(slot, { theme: 'outline', size: 'large', text: 'signin_with' });
+}
+
+function handleGoogleCredential(response) {
+  try {
+    const payload = JSON.parse(atob(response.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/')));
+    const suggestedId = (payload.email || payload.sub || 'google_user').replace(/[^a-zA-Z0-9_]/g, '_').toLowerCase();
+    document.getElementById('auth-id').value = suggestedId;
+    document.getElementById('auth-name').value = payload.given_name || payload.name || '';
+    loginAccount();
+    showNotif('✅ Login com Google concluído.');
+  } catch (e) {
+    showNotif('❌ Não foi possível concluir login Google.');
+  }
+}
+
+function loginAccount() {
+  const name = document.getElementById('auth-name').value.trim();
+  const id = document.getElementById('auth-id').value.trim() || 'default';
+  localStorage.setItem('etec_account_id', id);
+  loadState();
+  if (name) state.studentName = name;
+  saveState();
+  document.getElementById('auth-btn-label').textContent = state.studentName || 'Conta';
+  closeAuthModal();
+  renderDashboard();
+  showNotif('✅ Conta carregada neste dispositivo.');
+}
+
+function exportBackup() {
+  saveState();
+  const payload = {
+    account: currentAccount(),
+    data: {
+      checkedDays: state.checkedDays, simulados: state.simulados, errors: state.errors,
+      topicStatus: state.topicStatus, timerSessions: state.timerSessions, studentName: state.studentName
+    }
+  };
+  const text = btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+  navigator.clipboard?.writeText(text);
+  showNotif('📦 Backup copiado. Cole no outro aparelho em Importar Backup.');
+}
+
+function importBackup() {
+  const raw = prompt('Cole aqui o código de backup:');
+  if (!raw) return;
+  try {
+    const decoded = JSON.parse(decodeURIComponent(escape(atob(raw.trim()))));
+    const id = decoded.account || currentAccount();
+    localStorage.setItem('etec_account_id', id);
+    state.checkedDays = decoded.data.checkedDays || {};
+    state.simulados = decoded.data.simulados || {};
+    state.errors = decoded.data.errors || [];
+    state.topicStatus = decoded.data.topicStatus || {};
+    state.timerSessions = decoded.data.timerSessions || [];
+    state.studentName = decoded.data.studentName || '';
+    saveState();
+    renderDashboard();
+    showNotif('✅ Backup importado com sucesso!');
+  } catch (e) {
+    showNotif('❌ Código inválido de backup.');
+  }
 }
 
 function subjectColor(mat) {
@@ -1328,43 +1569,24 @@ function getLastScore() {
 }
 
 function getCurrentWeekNum() {
-  const start = new Date(localStorage.getItem('etec_start') || new Date().toISOString());
+  const start = new Date(localStorage.getItem(accountKey('start')) || new Date().toISOString());
   const diff = Math.floor((new Date() - start) / (7 * 24 * 3600 * 1000));
   return Math.max(1, Math.min(29, diff + 1));
 }
 
 function getTopicKey(sub, i) { return `topic_${sub}_${i}`; }
 
-function renderDashboard() {
-  if (!state.studentName) {
-    const name = prompt('Qual é o seu nome? (Vamos personalizar sua experiência)');
-    if (name && name.trim()) {
-      state.studentName = name.trim();
-      localStorage.setItem('etec_name', state.studentName);
-    } else {
-      state.studentName = 'Estudante';
-    }
-  }
-  if (!localStorage.getItem('etec_start')) localStorage.setItem('etec_start', new Date().toISOString());
-
-  document.getElementById('student-name-display').textContent = state.studentName;
-  const wNum = getCurrentWeekNum();
-  document.getElementById('current-week-display').textContent = wNum;
-  document.getElementById('today-week-num').textContent = wNum;
-
-  const opts = {weekday:'long',day:'numeric',month:'long'};
-  document.getElementById('today-date-display').textContent = new Date().toLocaleDateString('pt-BR', opts);
-
+function updateStatsUI() {
   const checked = getTotalChecked();
+  const simsDone = getSimsDone();
+  const lastScore = getLastScore();
+
   document.getElementById('stat-days').textContent = checked;
   document.getElementById('bar-days').style.width = Math.min(100, (checked/174)*100) + '%';
-
-  const simsDone = getSimsDone();
   document.getElementById('stat-sims').textContent = simsDone;
   document.getElementById('bar-sims').style.width = (simsDone/19*100) + '%';
-  document.getElementById('badge-simulados').textContent = 19 - simsDone || 19;
+  document.getElementById('badge-simulados').textContent = Math.max(0, 19 - simsDone);
 
-  const lastScore = getLastScore();
   if (lastScore) {
     document.getElementById('stat-score').textContent = lastScore.score;
     document.getElementById('stat-score-sub').textContent = `de 50 — Simulado ${lastScore.num}`;
@@ -1379,6 +1601,66 @@ function renderDashboard() {
   document.getElementById('stat-errors').textContent = state.errors.length;
   document.getElementById('badge-erros').textContent = state.errors.length;
   document.getElementById('bar-errors').style.width = Math.min(100, state.errors.length*5) + '%';
+}
+
+function renderProgressOverview() {
+  const checked = getTotalChecked();
+  const pct = Math.round((checked / 174) * 100);
+  const byPhase = SCHEDULE.map(ph => ({
+    name: `Fase ${ph.phase}`,
+    total: ph.weeks_data.reduce((acc,w)=> acc + w.days.length, 0),
+    done: ph.weeks_data.reduce((acc,w)=> acc + w.days.filter((_,i)=>state.checkedDays[getDayKey(ph.phase,w.num,i)]).length, 0)
+  }));
+  const el = document.getElementById('progress-overview');
+  el.innerHTML = `<div class="overview-card"><div>Dias concluídos</div><div class="overview-big">${checked}/174</div><div>${pct}% do plano total</div><div class="kpi-actions"><button class="btn btn-primary" onclick="navigate('schedule')">Abrir Cronograma</button></div></div>` +
+    byPhase.map(p=>`<div class="overview-card"><div>${p.name}</div><div class="overview-big">${p.done}/${p.total}</div><div>${Math.round((p.done/p.total)*100)}% concluído</div></div>`).join('');
+}
+
+function renderSimuladosOverview() {
+  const el = document.getElementById('sim-overview');
+  const sims = Object.entries(state.simulados);
+  const avg = sims.length ? Math.round(sims.reduce((a,[,s])=>a+((s.port||0)+(s.mat||0)+(s.cien||0)+(s.hum||0)),0)/sims.length) : 0;
+  const best = sims.length ? Math.max(...sims.map(([,s])=>(s.port||0)+(s.mat||0)+(s.cien||0)+(s.hum||0))) : 0;
+  const last = getLastScore();
+  el.innerHTML = `
+    <div class="overview-card"><div>Simulados feitos</div><div class="overview-big">${sims.length}/19</div><div class="kpi-actions"><button class="btn btn-primary" onclick="navigate('simulados')">Ir para Simulados</button></div></div>
+    <div class="overview-card"><div>Média geral</div><div class="overview-big">${avg}</div><div>acertos em 50</div><div class="kpi-actions"><button class="btn btn-ghost" onclick="navigate('simulados')">Lançar/Editar Nota</button></div></div>
+    <div class="overview-card"><div>Melhor nota</div><div class="overview-big">${best || '–'}</div></div>
+    <div class="overview-card"><div>Último simulado</div><div class="overview-big">${last ? last.score : '–'}</div><div>${last ? 'Simulado '+last.num : 'Nenhum registrado'}</div></div>
+  `;
+}
+
+function renderErrorsOverview() {
+  const el = document.getElementById('errors-overview');
+  const bySub = {};
+  state.errors.forEach(e => bySub[e.subject] = (bySub[e.subject] || 0) + 1);
+  const items = Object.entries(bySub).sort((a,b)=>b[1]-a[1]);
+  el.innerHTML = `<div class="overview-card"><div>Total de anotações</div><div class="overview-big">${state.errors.length}</div><div class="kpi-actions"><button class="btn btn-primary" onclick="navigate('erros')">Abrir Caderno</button></div></div>` +
+    `<div class="overview-card"><div>Matéria com mais erros</div><div class="overview-big">${items[0]?.[0] || '—'}</div><div>${items[0]?.[1] || 0} registros</div></div>` +
+    `<div class="overview-card" style="grid-column:1/-1"><div>Distribuição por matéria</div><div class="progress-list">${items.map(([sub,q])=>`<div class="progress-item"><span>${sub}</span><strong>${q}</strong></div>`).join('') || '<div class="progress-item">Sem dados</div>'}</div></div>`;
+}
+
+function renderDashboard() {
+  if (!state.studentName) {
+    const name = prompt('Qual é o seu nome? (Vamos personalizar sua experiência)');
+    if (name && name.trim()) {
+      state.studentName = name.trim();
+      saveState();
+    } else {
+      state.studentName = 'Estudante';
+    }
+  }
+  if (!localStorage.getItem(accountKey('start'))) localStorage.setItem(accountKey('start'), new Date().toISOString());
+
+  document.getElementById('student-name-display').textContent = state.studentName;
+  const wNum = getCurrentWeekNum();
+  document.getElementById('current-week-display').textContent = wNum;
+  document.getElementById('today-week-num').textContent = wNum;
+
+  const opts = {weekday:'long',day:'numeric',month:'long'};
+  document.getElementById('today-date-display').textContent = new Date().toLocaleDateString('pt-BR', opts);
+
+  updateStatsUI();
 
   let phase = null, week = null;
   for (const ph of SCHEDULE) {
@@ -1460,8 +1742,7 @@ function toggleDay(key, el) {
     el.closest('.today-item').classList.remove('completed');
   }
   saveState();
-  document.getElementById('stat-days').textContent = getTotalChecked();
-  document.getElementById('bar-days').style.width = Math.min(100, getTotalChecked()/174*100) + '%';
+  updateStatsUI();
 }
 
 function renderSchedule() {
@@ -1532,6 +1813,7 @@ function toggleScheduleDay(key, el, e) {
   el.classList.toggle('done');
   el.textContent = !was ? '✓' : '';
   saveState();
+  updateStatsUI();
   if (!was) showNotif('🎉 Dia concluído no plano!');
 }
 
@@ -1548,7 +1830,7 @@ function renderMap() {
     tab.className = 'map-tab' + (si === 0 ? ' active' : '');
     tab.textContent = sub;
     tab.onclick = () => {
-      document.querySelectorAll('.map-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('#map-tabs .map-tab').forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
       document.querySelectorAll('.map-content').forEach(c => c.classList.remove('active'));
       document.getElementById('map-content-' + si).classList.add('active');
@@ -1717,13 +1999,14 @@ function updateModalTotal() {
   document.getElementById('modal-total-preview').style.color = pct>=70?'var(--green)':pct>=50?'var(--orange)':'var(--red)';
 }
 
+function clampScore(v,max){return Math.max(0, Math.min(max, parseInt(v)||0));}
 function saveSimulado() {
   const num = state.currentSimModal;
   state.simulados[num] = {
-    port: parseInt(document.getElementById('inp-port').value)||0,
-    mat: parseInt(document.getElementById('inp-mat').value)||0,
-    cien: parseInt(document.getElementById('inp-cien').value)||0,
-    hum: parseInt(document.getElementById('inp-hum').value)||0,
+    port: clampScore(document.getElementById('inp-port').value,15),
+    mat: clampScore(document.getElementById('inp-mat').value,12),
+    cien: clampScore(document.getElementById('inp-cien').value,15),
+    hum: clampScore(document.getElementById('inp-hum').value,8),
     obs: document.getElementById('inp-obs').value,
     date: new Date().toLocaleDateString('pt-BR')
   };
@@ -1733,10 +2016,7 @@ function saveSimulado() {
   
   showNotif(`🎯 Simulado ${num} Salvo!`, `<button class="toast-btn" onclick="navigate('erros')">Anotar Erros</button>`);
   
-  if (getLastScore()) {
-    document.getElementById('stat-sims').textContent = getSimsDone();
-    document.getElementById('bar-sims').style.width = (getSimsDone()/19*100) + '%';
-  }
+  updateStatsUI();
 }
 
 function closeSimModal() {
@@ -1757,6 +2037,7 @@ function addError() {
   document.getElementById('err-type').value = '';
   document.getElementById('err-desc').value = '';
   renderErrors();
+  updateStatsUI();
   showNotif('✍️ Erro adicionado ao caderno!');
 }
 
@@ -1796,6 +2077,7 @@ function deleteError(idx) {
   state.errors.splice(idx, 1);
   saveState();
   renderErrors();
+  updateStatsUI();
   showNotif('🗑️ Erro removido.');
 }
 
@@ -1810,7 +2092,16 @@ let sessionsToday = 0;
 let totalMinutes = 0;
 let timerHistory = [];
 
+function hydrateTimerFromState() {
+  const today = new Date().toLocaleDateString('pt-BR');
+  const todaySessions = (state.timerSessions || []).filter(s => s.day === today);
+  sessionsToday = todaySessions.length;
+  totalMinutes = todaySessions.reduce((acc,s)=>acc+s.elapsed,0);
+  timerHistory = todaySessions.map(s => ({sub:s.sub, elapsed:s.elapsed, time:s.time})).reverse();
+}
+
 function renderTimer() {
+  hydrateTimerFromState();
   updateTimerDisplay();
   document.getElementById('sessions-today').textContent = sessionsToday;
   document.getElementById('total-time').textContent = totalMinutes + 'min';
@@ -1874,7 +2165,11 @@ function completeSession() {
   const sub = document.getElementById('timer-subject').value || 'Estudo geral';
   sessionsToday++;
   totalMinutes += elapsed;
-  timerHistory.unshift({ sub, elapsed, time: new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'}) });
+  const time = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit',minute:'2-digit'});
+  timerHistory.unshift({ sub, elapsed, time });
+  state.timerSessions = state.timerSessions || [];
+  state.timerSessions.push({ day: new Date().toLocaleDateString('pt-BR'), sub, elapsed, time });
+  saveState();
   document.getElementById('sessions-today').textContent = sessionsToday;
   document.getElementById('total-time').textContent = totalMinutes + 'min';
   renderTimerHistory();
@@ -2021,6 +2316,11 @@ function showNotif(msg, actionHtml = '') {
 
 // ========== INIT ==========
 window.addEventListener('DOMContentLoaded', () => {
+  loadState();
+  document.getElementById('auth-btn-label').textContent = state.studentName || 'Entrar';
+  ensureInlineBackButtons();
+  updateBackButton();
+  initGoogleLogin();
   renderDashboard();
 });
 </script>
